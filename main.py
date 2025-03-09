@@ -68,8 +68,8 @@ async def send_bug_report(name: str = Form(...), email: str = Form(...), subject
     <body>
         <p><strong>Name:</strong> {name}</p>
         <p><strong>Email:</strong> {email}</p>
-        <p><strong>Subject:</strong><b>{subject}</b></p>
-        <p><strong>Message:</strong>{msg}</p>
+        <p><strong>Subject:</strong> {subject} </p>
+        <p><strong>Message:</strong> {msg}</p>
     </body>
     </html>
     """
