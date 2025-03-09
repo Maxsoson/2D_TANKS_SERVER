@@ -1,0 +1,24 @@
+/2D_TANKS_SERVER/
+├── main.py
+├── templates/
+│   ├── index.html
+│   ├── bug_report.html
+│   ├── leaderboard.html
+│   ├── register.html
+├── static/
+│   ├── CSS/
+│   │   ├── bug_report.css
+│   │   ├── home.css
+│   │   ├── leaderboard.css
+│   │   ├── register.css
+│   ├── JavaScript/
+│   │   ├── form-validation.js
+│   │   ├── home.js
+│   │   ├── leaderboard.js
+│   │   ├── register.js
+│   ├── Images/
+│   │   ├── back.png
+│   │   ├── background.png
+│   │   ├── logo.png
+│   │   ├── skin1.png
+│   │   ├── skin2.png

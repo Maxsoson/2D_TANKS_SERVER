@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard | Pixel Tanks Battlefront</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='CSS/leaderboard.css') }}">
+</head>
+<body>
+
+    <canvas id="tankCanvas"></canvas>
+
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', path='Images/logo.png') }}" alt="Logo" class="logo-icon">
+            <span class="logo-text">Pixel Tanks Battlefront</span>
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="leaderboard.html">Leaderboard</a></li>
+            <li><a href="bug_report.html">Bug Report</a></li>
+            <li><a href="register.html">Register</a></li>
+        </ul>
+    </nav>
+
+    <div class="leaderboard-frame">
+        <div class="leaderboard-header">
+            <h1>🏆 Leaderboard 🏆</h1>
+        </div>
+        <div class="leaderboard-content">
+            <table id="leaderboard">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Дані будуть додаватися через JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', path='/JavaScript/home.js') }}"></script>
+    <script src="{{ url_for('static', path='/JavaScript/leaderboard.js') }}"></script>
+
+</body>
+</html>

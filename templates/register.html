@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Tanks Battlefront</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='CSS/register.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <canvas id="tankCanvas"></canvas>
+
+    <main>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="{{ url_for('static', path='Images/logo.png') }}" alt="Logo" class="logo-icon">
+                <span class="logo-text">Pixel Tanks Battlefront</span>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="bug_report.html">Bug Report</a></li>
+                <li><a href="register.html">Register</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <div class="login-wrapper">
+                <div class="login-box">
+                    <form onsubmit="validateCaptcha(event)">
+                        <h1>Registration</h1>
+                        <div class="input-box">
+                            <input type="email" placeholder="Email" required>
+                            <i class='bx bx-envelope'></i>
+                        </div>
+                        <div class="input-box">
+                            <input type="text" placeholder="Username" required>
+                            <i class='bx bxs-user'></i>
+                        </div>
+                        <div class="input-box">
+                            <input type="password" placeholder="Password" required>
+                            <i class='bx bxs-lock-alt'></i>
+                        </div>
+
+                        <div class="input-box">
+                            <label id="captcha-question"></label>
+                            <input type="text" id="captcha-input" placeholder="Enter answer" required>
+                            <input type="hidden" id="captcha-answer">
+                        </div>
+
+                        <button type="submit" class="btn">Finish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Затемнення сторінки -->
+    <div id="modal-overlay"></div>
+
+    <!-- Модальне вікно -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <h2>✅ Registration Successful!</h2>
+            <p>Welcome to Pixel Tanks Battlefront! You can now log in and start playing.</p>
+            <button onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', path='/JavaScript/home.js') }}"></script>
+    <script src="{{ url_for('static', path='/JavaScript/register.js') }}"></script>
+
+</body>
+</html>
