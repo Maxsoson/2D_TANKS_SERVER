@@ -1,6 +1,41 @@
 document.addEventListener("DOMContentLoaded", function () {
     generateCaptcha();
     setupInputValidation();
+
+    // Додаємо обробник форми
+    document.getElementById("registerForm").addEventListener("submit", async function(event) {
+        event.preventDefault(); // Запобігаємо стандартній відправці форми
+
+        // Перевірка CAPTCHA перед відправкою
+        const userAnswer = document.getElementById('captcha-input').value;
+        const correctAnswer = document.getElementById('captcha-answer').value;
+
+        if (userAnswer != correctAnswer) {
+            alert("❌ Incorrect CAPTCHA. Please try again.");
+            generateCaptcha();
+            return;
+        }
+
+        let email = document.getElementById("email").value;
+        let name = document.getElementById("name").value;
+        let password = document.getElementById("password").value;
+
+        let response = await fetch("/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams({ email: email, name: name, password: password })
+        });
+
+        let result = await response.json();
+        document.getElementById("message").textContent = result.message;
+
+        // Якщо реєстрація успішна, показати модальне вікно
+        if (result.message === "Користувач успішно зареєстрований") {
+            showModal();
+        }
+    });
 });
 
 /* === Генерація CAPTCHA === */
@@ -9,20 +44,6 @@ function generateCaptcha() {
     const num2 = Math.floor(Math.random() * 10);
     document.getElementById('captcha-question').innerText = `What is ${num1} + ${num2}?`;
     document.getElementById('captcha-answer').value = num1 + num2;
-}
-
-/* === Валідація CAPTCHA === */
-function validateCaptcha(event) {
-    event.preventDefault(); // Запобігаємо оновленню сторінки
-    const userAnswer = document.getElementById('captcha-input').value;
-    const correctAnswer = document.getElementById('captcha-answer').value;
-
-    if (userAnswer == correctAnswer) {
-        showModal(); // Викликаємо модальне вікно
-    } else {
-        alert("❌ Incorrect CAPTCHA. Please try again.");
-        generateCaptcha();
-    }
 }
 
 /* === Показати модальне вікно і накласти затемнення на всю сторінку === */
@@ -51,6 +72,7 @@ function closeModal() {
         overlay.style.display = "none";
         modal.style.display = "none";
         document.querySelector("form").reset();
+        generateCaptcha(); // Генеруємо нову CAPTCHA
     }, 300);
 }
 
@@ -90,8 +112,3 @@ function setupInputValidation() {
 
     checkInputs(); // Перевіряємо на старті
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("home.js is running and DOM is ready!");
-    drawTanks(); // Викликати функцію малювання танків
-});

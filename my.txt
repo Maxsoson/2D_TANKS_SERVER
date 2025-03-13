@@ -1,5 +1,7 @@
 /2D_TANKS_SERVER/
 ├── main.py
+├── database/
+│   ├── users.db    # база користувачів
 ├── templates/
 │   ├── index.html    # тут знаходиться форма авторизації
 │   ├── bug_report.html
