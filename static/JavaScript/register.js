@@ -112,3 +112,4 @@ function setupInputValidation() {
 
     checkInputs(); // Перевіряємо на старті
 }
+

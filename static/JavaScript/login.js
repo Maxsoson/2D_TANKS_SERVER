@@ -82,3 +82,4 @@ function logout() {
   alert("Ви вийшли з системи.");
   //You have been logged out.
 }
+
