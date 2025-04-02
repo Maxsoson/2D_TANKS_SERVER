@@ -18,6 +18,7 @@
 │   │   ├── home.js
 │   │   ├── leaderboard.js
 │   │   ├── register.js
+│   │   ├── login.js
 │   ├── Images/
 │   │   ├── back.png
 │   │   ├── background.png

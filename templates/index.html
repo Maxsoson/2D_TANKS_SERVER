@@ -23,7 +23,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="leaderboard.html">Leaderboard</a></li>
             <li><a href="bug_report.html">Bug Report</a></li>
-            <li><a href="register.html">Register</a></li>
+            <li id="auth-link"><a href="register.html">Register</a></li>
         </ul>
     </nav>   
 
@@ -31,7 +31,7 @@
         <div class="info-frame">
             <div class="info">
                 <h1>Welcome to Pixel Tanks Battlefront website!</h1>
-                <p>This game about 2D tanks was created by two students of Cherkasy State Business College - Maksym Martynenko and Maksym Usanin.</p>
+                <p>This game about 2D tanks was created by two students of Cherkasy State Business College - Maksym Martynenko and Maksym Usanin. Our goal was to create a game that allows players to compete in the 80s and test their skills in driving 2D tanks at different levels of difficulty. With a creative approach and technical expertise, we bring to life an 80s game that delivers an immersive gameplay experience.</p>
                 <a href="https://discord.gg/sA2yWX7K" class="btn">Join our Discord</a>
             </div>
         </div>
@@ -67,11 +67,12 @@
         <div class="profile-wrapper" id="profile-container" style="display: none;">
             <div class="profile-box">
                 <h2>Welcome, <span id="username"></span>!</h2>
-                <button class="btn" onclick="logout()">Logout</button>
+                <button class="btn" id="logout-button">Logout</button>
             </div>
         </div>
     </div>
 
+    <script src="{{ url_for('static', path='/JavaScript/home.js') }}"></script>
     <script src="{{ url_for('static', path='/JavaScript/login.js') }}"></script>
 </body>
 </html>

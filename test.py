@@ -7,14 +7,8 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import sqlite3
-import jwt
-import datetime
-import bcrypt
 
 app = FastAPI()
-
-SECRET_KEY = "your_secret_key"
-ALGORITHM = "HS256"
 
 # Підключення статичних файлів
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -25,85 +19,78 @@ app.mount("/Images", StaticFiles(directory="static/Images"), name="Images")
 # Підключення шаблонів HTML
 templates = Jinja2Templates(directory="templates")
 
-# Функція для підключення до бази даних із `check_same_thread=False` та `timeout=10`
+# Функція для підключення до бази даних
 def get_db_connection():
-    conn = sqlite3.connect("database/users.db", check_same_thread=False, timeout=10)
+    conn = sqlite3.connect("database/users.db")
     conn.row_factory = sqlite3.Row
     return conn
 
-# Налаштування SQLite в WAL-режим
-with get_db_connection() as conn:
-    conn.execute("PRAGMA journal_mode=WAL;")
-    conn.commit()
-
 # Створення таблиці users при запуску сервера
-with get_db_connection() as conn:
-    conn.execute("""
+with get_db_connection() as db:
+    db.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            email TEXT NOT NULL UNIQUE,
             name TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL
         )
     """)
-    conn.commit()
+    db.commit()
 
-# Модель для реєстрації користувачів
+# Модель для отримання даних
 class UserRegister(BaseModel):
-    email: str
     name: str
     password: str
 
-# Функція хешування паролів
-def hash_password(password: str) -> str:
-    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
-
-# Функція перевірки пароля
-def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
-
 # Маршрут для реєстрації користувачів
 @app.post("/register")
-async def register_user(email: str = Form(...), name: str = Form(...), password: str = Form(...)):
-    hashed_password = hash_password(password)  # Хешуємо пароль перед збереженням
+async def register_user(request: Request, email: str = Form(...), name: str = Form(...), password: str = Form(...)):
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        try:
-            cursor.execute("INSERT INTO users (email, name, password) VALUES (?, ?, ?)", 
-                           (email, name, hashed_password))
-            conn.commit()
-            return {"message": "The user is successfully registered"}
-        except sqlite3.IntegrityError:
-            return {"message": "A user with this email or nickname already exists."}
+    try:
+        cursor.execute("INSERT INTO users (email, name, password) VALUES (?, ?, ?)", (email, name, password))
+        conn.commit()
+        return JSONResponse(content={"message": "Користувач успішно зареєстрований", "status": "success"}, status_code=201)
+    #The user is successfully registered
+    
+    except sqlite3.IntegrityError:
+        cursor.execute("SELECT * FROM users WHERE email = ? OR name = ?", (email, name))
+        existing_user = cursor.fetchone()
 
-# Функція для перевірки користувача (за name + password)
-def authenticate_user(name: str, password: str):
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM users WHERE name = ?", (name,))
-        user = cursor.fetchone()
+        if existing_user:
+            if existing_user["email"] == email and existing_user["name"] == name:
+                return JSONResponse(content={"message": "Користувач із такою електронною адресою та псевдонімом уже існує.", "status": "error"}, status_code=400)
+            #A user with this email and nickname already exists.
+            elif existing_user["email"] == email:
+                return JSONResponse(content={"message": "Користувач із цією електронною адресою вже існує.", "status": "error"}, status_code=400)
+            #A user with this email already exists.
+            elif existing_user["name"] == name:
+                return JSONResponse(content={"message": "Користувач із таким псевдонімом уже існує.", "status": "error"}, status_code=400)
+            #A user with this nickname already exists.
+    
+    finally:
+        conn.close()
 
-    if user and verify_password(password, user["password"]):  # Перевірка хешованого пароля
-        return user
-    return None
 
-# Маршрут для авторизації (вхід за name + password)
+# Маршрут для авторизації користувачів
 @app.post("/login")
-async def login(name: str = Form(...), password: str = Form(...)):
-    user = authenticate_user(name, password)
-
-    if not user:
-        return JSONResponse(status_code=400, content={"message": "❌ Невірний nickname або пароль"})
-
-    # Генерація JWT-токена
-    token_data = {
-        "sub": user["name"],
-        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=12)  # Термін дії 12 годин
-    }
-    token = jwt.encode(token_data, SECRET_KEY, algorithm=ALGORITHM)
-
-    return {"message": "✅ Вхід успішний!", "token": token, "username": user["name"]}
+async def login_user(name: str = Form(...), password: str = Form(...)):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT * FROM users WHERE name = ? AND password = ?", (name, password))
+    user = cursor.fetchone()
+    conn.close()
+    
+    if user:
+        #return RedirectResponse(url="/leaderboard.html", status_code=302)
+        return JSONResponse(content={
+            "message": "Login successful",
+            "token": "example_token",
+            "username": user["name"]  # Має бути user["name"], а не null
+        })
+    else:
+        return JSONResponse(content={"message": "Invalid nickname or password"}, status_code=401)
 
 # Маршрути сторінок
 @app.get("/", response_class=RedirectResponse)
@@ -113,14 +100,6 @@ async def root():
 @app.get("/index.html", response_class=HTMLResponse)
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
-
-@app.get("/load1.html", response_class=HTMLResponse)
-async def load1(request: Request):
-    return templates.TemplateResponse("load1.html", {"request": request})
-
-@app.get("/load2.html", response_class=HTMLResponse)
-async def load2(request: Request):
-    return templates.TemplateResponse("load2.html", {"request": request})
 
 @app.get("/register.html", response_class=HTMLResponse)
 async def register(request: Request):
@@ -134,7 +113,7 @@ async def bug_report(request: Request):
 async def leaderboard(request: Request):
     return templates.TemplateResponse("leaderboard.html", {"request": request})
 
-# Налаштування SMTP для надсилання баг-репортів
+# Налаштування SMTP
 PORT = 2525
 SMTP_SERVER = "smtp.mailmug.net"
 LOGIN = "nfqxj2tsmptkmaui"
@@ -175,3 +154,4 @@ async def send_bug_report(name: str = Form(...), email: str = Form(...), subject
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
+    

@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, Form, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from pydantic import BaseModel
 import smtplib
 from email.mime.text import MIMEText
@@ -30,7 +30,6 @@ with get_db_connection() as db:
     db.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            email TEXT NOT NULL UNIQUE,
             name TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL
         )
@@ -39,11 +38,10 @@ with get_db_connection() as db:
 
 # Модель для отримання даних
 class UserRegister(BaseModel):
-    email: str
     name: str
     password: str
 
-# Маршрут для реєстрації користувачів (отримує дані з форми)
+# Маршрут для реєстрації користувачів
 @app.post("/register")
 async def register_user(request: Request, email: str = Form(...), name: str = Form(...), password: str = Form(...)):
     conn = get_db_connection()
@@ -52,20 +50,47 @@ async def register_user(request: Request, email: str = Form(...), name: str = Fo
     try:
         cursor.execute("INSERT INTO users (email, name, password) VALUES (?, ?, ?)", (email, name, password))
         conn.commit()
-        return {"message": "The user is successfully registered"}
+        return JSONResponse(content={"message": "Користувач успішно зареєстрований", "status": "success"}, status_code=201)
+    #The user is successfully registered
+    
     except sqlite3.IntegrityError:
         cursor.execute("SELECT * FROM users WHERE email = ? OR name = ?", (email, name))
         existing_user = cursor.fetchone()
 
         if existing_user:
             if existing_user["email"] == email and existing_user["name"] == name:
-                return {"message": "A user with this email and nickname already exists."}
+                return JSONResponse(content={"message": "Користувач із такою електронною адресою та псевдонімом уже існує.", "status": "error"}, status_code=400)
+            #A user with this email and nickname already exists.
             elif existing_user["email"] == email:
-                return {"message": "A user with this email already exists."}
+                return JSONResponse(content={"message": "Користувач із цією електронною адресою вже існує.", "status": "error"}, status_code=400)
+            #A user with this email already exists.
             elif existing_user["name"] == name:
-                return {"message": "A user with this nickname already exists."}
+                return JSONResponse(content={"message": "Користувач із таким псевдонімом уже існує.", "status": "error"}, status_code=400)
+            #A user with this nickname already exists.
+    
     finally:
         conn.close()
+
+
+# Маршрут для авторизації користувачів
+@app.post("/login")
+async def login_user(name: str = Form(...), password: str = Form(...)):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT * FROM users WHERE name = ? AND password = ?", (name, password))
+    user = cursor.fetchone()
+    conn.close()
+    
+    if user:
+        #return RedirectResponse(url="/leaderboard.html", status_code=302)
+        return JSONResponse(content={
+            "message": "Login successful",
+            "token": "example_token",
+            "username": user["name"]  # Має бути user["name"], а не null
+        })
+    else:
+        return JSONResponse(content={"message": "Invalid nickname or password"}, status_code=401)
 
 # Маршрути сторінок
 @app.get("/", response_class=RedirectResponse)
@@ -75,14 +100,6 @@ async def root():
 @app.get("/index.html", response_class=HTMLResponse)
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
-
-@app.get("/load1.html", response_class=HTMLResponse)
-async def load1(request: Request):
-    return templates.TemplateResponse("load1.html", {"request": request})
-
-@app.get("/load2.html", response_class=HTMLResponse)
-async def load2(request: Request):
-    return templates.TemplateResponse("load2.html", {"request": request})
 
 @app.get("/register.html", response_class=HTMLResponse)
 async def register(request: Request):
@@ -137,3 +154,4 @@ async def send_bug_report(name: str = Form(...), email: str = Form(...), subject
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
+    
