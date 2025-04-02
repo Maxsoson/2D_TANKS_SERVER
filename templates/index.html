@@ -19,11 +19,11 @@
             <img src="{{ url_for('static', path='Images/logo.png') }}" alt="Logo" class="logo-icon">
             <span class="logo-text">Pixel Tanks Battlefront</span>
         </div>
-        <ul>
+        <ul id="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="leaderboard.html">Leaderboard</a></li>
             <li><a href="bug_report.html">Bug Report</a></li>
-            <li><a href="register.html">Register</a></li>
+            <li id="auth-link"><a href="register.html">Register</a></li>
         </ul>
     </nav>   
 
@@ -31,21 +31,22 @@
         <div class="info-frame">
             <div class="info">
                 <h1>Welcome to Pixel Tanks Battlefront website!</h1>
-                <p>This game about 2D tanks was created by two students of Cherkasy State Business College - Maksym Martynenko and Maksym Usranin. Our goal was to create a game that allows players to compete in the 80s and test their skills in driving 2D tanks at different levels of difficulty. With a creative approach and technical expertise, we bring to life an 80s game that delivers an immersive gameplay experience.</p>
+                <p>This game about 2D tanks was created by two students of Cherkasy State Business College - Maksym Martynenko and Maksym Usanin. Our goal was to create a game that allows players to compete in the 80s and test their skills in driving 2D tanks at different levels of difficulty. With a creative approach and technical expertise, we bring to life an 80s game that delivers an immersive gameplay experience.</p>
                 <a href="https://discord.gg/sA2yWX7K" class="btn">Join our Discord</a>
             </div>
         </div>
 
-        <div class="login-wrapper">
+        <!-- Блок логіна -->
+        <div class="login-wrapper" id="login-container">
             <div class="login-box">
-                <form action="load1.html">
-                    <h1>login</h1>
+                <form id="loginForm">
+                    <h1>Login</h1>
                     <div class="input-box">
-                        <input type="text" placeholder="Username" required>
+                        <input type="text" id="login-name" placeholder="Nickname" required>  <!-- Змінили на name -->
                         <i class='bx bxs-user'></i>
                     </div>
                     <div class="input-box">
-                        <input type="password" placeholder="Password" required>
+                        <input type="password" id="login-password" placeholder="Password" required>
                         <i class='bx bxs-lock-alt'></i>
                     </div>
                     <div class="remember-forgot">
@@ -53,16 +54,26 @@
                         <a href="#">Forgot password?</a>
                     </div>
                     <button type="submit" class="btn">Login</button>
+                    <p id="login-message"></p>
                     <div class="register-link">
                         <p>Don't have an account?</p>
-                        <a href="/templates/register.html">Register</a>
+                        <a href="register.html">Register</a>
                     </div>
                 </form>
+            </div>
+        </div>
+
+        <!-- Блок профілю (показується після входу) -->
+        <div class="profile-wrapper" id="profile-container" style="display: none;">
+            <div class="profile-box">
+                <h2>Welcome, <span id="username"></span>!</h2>
+                <button class="btn" id="logout-button">Logout</button>
             </div>
         </div>
     </div>
 
     <script src="{{ url_for('static', path='/JavaScript/home.js') }}"></script>
-
+    <script src="{{ url_for('static', path='/JavaScript/login.js') }}"></script>
 </body>
 </html>
+

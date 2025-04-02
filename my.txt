@@ -1,10 +1,12 @@
 /2D_TANKS_SERVER/
 ├── main.py
+├── database/
+│   ├── users.db    # база користувачів
 ├── templates/
-│   ├── index.html
+│   ├── index.html    # тут знаходиться форма авторизації
 │   ├── bug_report.html
 │   ├── leaderboard.html
-│   ├── register.html
+│   ├── register.html   # форма реєстрації
 ├── static/
 │   ├── CSS/
 │   │   ├── bug_report.css
@@ -16,9 +18,11 @@
 │   │   ├── home.js
 │   │   ├── leaderboard.js
 │   │   ├── register.js
+│   │   ├── login.js
 │   ├── Images/
 │   │   ├── back.png
 │   │   ├── background.png
 │   │   ├── logo.png
 │   │   ├── skin1.png
 │   │   ├── skin2.png
+
