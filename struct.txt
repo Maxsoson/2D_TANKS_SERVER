@@ -1,0 +1,83 @@
+/2D_TANKS_SERVER/
+├── main.py
+├── database/
+│   └── users.db    # база користувачів
+|
+├── static/
+│   ├── Audio/
+│   │   ├── home1.mp3
+│   │   ├── home2.mp3
+│   │   ├── home3.mp3
+│   │   ├── home4.mp3
+│   │   ├── home5.mp3
+│   │   ├── home6.mp3
+│   │   ├── home7.mp3
+│   │   ├── home8.mp3
+│   │   └── troll1.mp3
+|   |
+│   ├── CSS/
+│   │   ├── bug_report.css
+│   │   ├── home.css
+│   │   ├── leaderboard.css
+│   │   ├── load_to_game_1.css
+│   │   ├── load_to_game_2.css
+│   │   ├── register.css
+│   │   └── tanki.css
+|   |
+│   ├── Images/
+|   |   ├──assets/
+|   |   │  ├── sprite-clasic.png
+|   |   │  ├── sprite-hell.png
+|   |   │  ├── sprite-hells.png
+|   |   │  └── sprite.png
+|   |   │
+│   │   ├── back.png
+│   │   ├── background.png
+│   │   ├── logo.png
+│   │   ├── skin1.png
+│   │   └── skin2.png
+│   │
+│   ├── JavaScript/
+│   |   ├── src/
+│   |   |   ├── base.js
+│   |   |   ├── border.js
+│   |   |   ├── brick-wall.js
+│   |   |   ├── bullet-explosion.js
+│   |   |   ├── bullet.js
+│   |   |   ├── constants.js
+│   |   |   ├── enemy-tank.js
+│   |   |   ├── event-emitter.js
+│   |   |   ├── explosion.js
+│   |   |   ├── game-object.js
+│   |   |   ├── game.js
+│   |   |   ├── hud.js
+│   |   |   ├── input.js
+│   |   |   ├── player-tank.js
+│   |   |   ├── player.js
+│   |   |   ├── sprite.js
+│   |   |   ├── stage.js
+│   |   |   ├── stages.js
+│   |   |   ├── steel-wall.js
+│   |   |   ├── tank-explosion.js
+│   |   |   ├── tank.js
+│   |   |   ├── utils.js
+│   |   |   ├── view.js
+│   |   |   └── wall.js
+|   |   |
+│   │   ├── form-validation.js
+│   │   ├── home.js
+│   │   ├── leaderboard.js
+│   |   ├── music-player.js
+│   |   ├── profile.js
+│   │   ├── register.js
+│   │   ├── login.js
+│   |   └── tanki.js
+|   |
+├── templates/
+|   ├── bug_report.html
+|   ├── index.html                # тут знаходиться форма авторизації
+|   ├── leaderboard.html
+|   ├── load_to_game_1.html
+|   ├── load_to_game_2.html
+|   ├── register.html             # форма реєстрації
+|   └── tanki.html
