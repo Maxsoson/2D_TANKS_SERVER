@@ -66,11 +66,13 @@
 |   |   |
 │   │   ├── form-validation.js
 │   │   ├── home.js
-│   │   ├── leaderboard.js
+│   │   ├── leaderboard.js  
+│   │   ├── load-profile.js
+│   │   ├── login.js
 │   |   ├── music-player.js
 │   |   ├── profile.js
+│   │   ├── recover-password.js
 │   │   ├── register.js
-│   │   ├── login.js
 │   |   └── tanki.js
 |   |
 ├── templates/
