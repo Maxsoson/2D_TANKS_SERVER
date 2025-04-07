@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Levels</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', path='CSS/load_to_game_2.css') }}">
+    <script src="{{ url_for('static', path='JavaScript/home.js') }}"></script>
+    <script src="{{ url_for('static', path='JavaScript/profile.js') }}"></script>
+</head>
+<body>
+    <!-- Полотно для гри -->
+    <canvas id="tankCanvas"></canvas>
+
+    <!-- Кнопка профілю у верхньому правому куті -->
+    <div class="profile-container">
+        <button class="profile-button">Profile</button>
+    </div>
+
+    <div class="overlay">
+        <h1>LEVELS</h1>
+
+        <a href="load_to_game_1.html"class="back-button">Back</a>
+
+        <div class="button-container">
+            <a href="tanki.html" class="pixel-button">1</a>
+            <a href="#" class="pixel-button">SOON...</a>
+            <a href="#" class="pixel-button">SOON...</a>
+            <a href="#" class="pixel-button">SOON...</a>
+        </div>
+    </div>
+
+    <!-- 🔹 Модальне вікно профілю -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Player Profile</h2>
+            <p><strong>Username:</strong> <span id="player-name">Player123</span></p>
+            <p><strong>Score:</strong> <span id="player-score">1500</span></p>
+            <p><strong>Email:</strong> <span id="player-email">player@example.com</span></p>
+        </div>
+    </div>
+</body>
+</html>

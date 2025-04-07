@@ -1,0 +1,179 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    overflow: hidden;
+    background: #000;
+}
+
+#tankCanvas {
+    position: absolute;
+    background: #000;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    flex-direction: column;
+}
+
+.overlay h1 {
+    color: #1c881c;
+    font-size: 80px;
+    text-shadow: 
+        -1px -1px 0 white,  
+        1px -1px 0 white,   
+        -1px 1px 0 white,   
+        3px 3px 0 white;
+    font-family: 'Pixelify Sans', cursive;
+    margin-bottom: 0;
+    position: relative;
+    display: inline-block;
+    transform: translateY(-10px);
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.pixel-button {
+    background-color: #BA0021;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    font-family: 'Pixelify Sans', cursive;
+    font-size: 24px;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.pixel-button:hover {
+    background-color: #ED2939;
+    color: #fff;
+}
+
+/* 🔹 Стилі для кнопки "Back" */
+.back-button {
+    background-color: #1c881c;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    font-family: 'Pixelify Sans', cursive;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    position: relative;
+    transform: translateY(-10px);
+    margin-left: 20px;
+    z-index: 2;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    background-color: #00563B;
+    color: #fff;
+}
+
+/* 🔹 Стилі для кнопки профілю */
+.profile-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+}
+
+.profile-button {
+    background-color: #1c881c; /* Темно-зелений фон */
+    color: #fff; /* Білий текст */
+    border: 2px solid #fff; /* Біла рамка */
+    border-radius: 5px;
+    font-family: 'Pixelify Sans', cursive;
+    font-size: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.profile-button:hover {
+    background-color: #00563B; 
+    color: #fff;
+}
+
+/* 🔹 Стилі для модального вікна */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 3;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+/* 🔹 Оформлення блоку профілю */
+.modal-content {
+    background-color: #222;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    font-family: 'Pixelify Sans', cursive;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    width: 350px;
+    position: relative;
+    border: 3px solid #1c881c;
+}
+
+/* 🔹 Стиль кнопки закриття */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: red;
+}
+
+/* 🔹 Стилі для тексту */
+.modal-content p {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.modal-content strong {
+    color: #1c881c;
+    font-size: 22px;
+}

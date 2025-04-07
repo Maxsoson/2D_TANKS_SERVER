@@ -215,3 +215,36 @@ tbody tr:nth-child(3) {
     color: black;
 }
 
+/* 🎵 Music Player Buttons */
+.music-btn {
+    border: none;
+    color: #000;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #90EE90; /* за замовчуванням зелена */
+}
+
+.music-btn:hover {
+    transform: scale(1.05);
+}
+
+/* 🔇 Стан кнопки звуку */
+.music-btn.muted {
+    background-color: #ff4c4c; /* червона */
+}
+
+.music-btn.unmuted {
+    background-color: #90EE90; /* зелена */
+}
+
+/* 🎚️ Регулятор гучності */
+#volume-slider {
+    width: 100px;
+    accent-color: #90EE90;
+    margin-left: 10px;
+}
