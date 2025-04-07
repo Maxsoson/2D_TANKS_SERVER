@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Test</title>
+        <link rel="stylesheet" href="{{ url_for('static', path='CSS/tanki.css') }}">
+        <script type="module" src="{{ url_for('static', path='JavaScript/tanki.js') }}"></script>
+    </head>
+
+    <body>
+        <div class="game-container">
+            <div class="canvas-wrapper">
+                <canvas id="game" width="416" height="416"></canvas>
+            </div>
+            <div class="hud">
+                <p>LEVEL: 1</p>
+                <p>Enemies: x</p>
+                <p>Scores: xxx</p>
+                <p>LIFES: xxx</p>
+            </div>
+        </div>
+    </body>
+    
+</html>
