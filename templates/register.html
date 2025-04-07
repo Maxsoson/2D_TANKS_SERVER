@@ -70,8 +70,19 @@
         </div>
     </div>
 
-    <script src="{{ url_for('static', path='/JavaScript/home.js') }}"></script>
-    <script src="{{ url_for('static', path='/JavaScript/register.js') }}"></script>
+            <!-- 🎵 Music Player -->
+    <div id="music-player" style="position: fixed; bottom: 20px; left: 20px; z-index: 999; background: rgba(0,0,0,0.6); padding: 10px 15px; border-radius: 12px;">
+        <span id="track-name" style="color: #fff; margin-right: 10px;">Now playing: Track 1</span>
+        <button id="play-btn" class="music-btn">▶︎</button>
+        <button id="next-btn" class="music-btn">⏭</button>
+        <button id="mute-btn" class="music-btn muted">🔈</button>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" style="vertical-align: middle;">
+        <audio id="audio-player"></audio>
+    </div> 
+
+    <script src="{{ url_for('static', path='JavaScript/home.js') }}"></script>
+    <script src="{{ url_for('static', path='JavaScript/music-player.js') }}"></script>
+    <script src="{{ url_for('static', path='JavaScript/register.js') }}"></script>
 
 </body>
 </html>
