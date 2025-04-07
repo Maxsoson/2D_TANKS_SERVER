@@ -12,12 +12,42 @@ app = FastAPI()
 
 # Підключення статичних файлів
 app.mount("/static", StaticFiles(directory="static"), name="static")
-app.mount("/CSS", StaticFiles(directory="static/CSS"), name="CSS")
-app.mount("/JavaScript", StaticFiles(directory="static/JavaScript"), name="JavaScript")
-app.mount("/Images", StaticFiles(directory="static/Images"), name="Images")
 
 # Підключення шаблонів HTML
 templates = Jinja2Templates(directory="templates")
+
+# Маршрути сторінок
+@app.get("/", response_class=RedirectResponse)
+async def root():
+    return RedirectResponse(url="/index.html")
+
+@app.get("/index.html", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/register.html", response_class=HTMLResponse)
+async def register(request: Request):
+    return templates.TemplateResponse("register.html", {"request": request})
+
+@app.get("/bug_report.html", response_class=HTMLResponse)
+async def bug_report(request: Request):
+    return templates.TemplateResponse("bug_report.html", {"request": request})
+
+@app.get("/leaderboard.html", response_class=HTMLResponse)
+async def leaderboard(request: Request):
+    return templates.TemplateResponse("leaderboard.html", {"request": request})
+
+@app.get("/load_to_game_1.html", response_class=HTMLResponse)
+async def load_to_game_1(request: Request):
+    return templates.TemplateResponse("load_to_game_1.html", {"request": request})
+
+@app.get("/load_to_game_2.html", response_class=HTMLResponse)
+async def load_to_game_2(request: Request):
+    return templates.TemplateResponse("load_to_game_2.html", {"request": request})
+
+@app.get("/tanki.html", response_class=HTMLResponse)
+async def tanki(request: Request):
+    return templates.TemplateResponse("tanki.html", {"request": request})
 
 # Функція для підключення до бази даних
 def get_db_connection():
@@ -31,6 +61,7 @@ with get_db_connection() as db:
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL UNIQUE,
+            email TEXT NOT NULL,
             password TEXT NOT NULL
         )
     """)
@@ -77,55 +108,77 @@ async def register_user(request: Request, email: str = Form(...), name: str = Fo
 async def login_user(name: str = Form(...), password: str = Form(...)):
     conn = get_db_connection()
     cursor = conn.cursor()
-    
+
     cursor.execute("SELECT * FROM users WHERE name = ? AND password = ?", (name, password))
     user = cursor.fetchone()
     conn.close()
-    
+
     if user:
-        #return RedirectResponse(url="/leaderboard.html", status_code=302)
         return JSONResponse(content={
             "message": "Login successful",
-            "token": "example_token",
-            "username": user["name"]  # Має бути user["name"], а не null
+            "name": user["name"],
+            "email": user["email"]
         })
     else:
-        return JSONResponse(content={"message": "Invalid nickname or password"}, status_code=401)
+        return JSONResponse(content={"message": "Invalid login or password"}, status_code=401)
 
-# Маршрути сторінок
-@app.get("/", response_class=RedirectResponse)
-async def root():
-    return RedirectResponse(url="/index.html")
+# Маршрут для відновлення пароля
+@app.post("/recover-password")
+async def recover_password(name: str = Form(...), email: str = Form(...)):
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
-@app.get("/index.html", response_class=HTMLResponse)
-async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    cursor.execute("SELECT * FROM users WHERE name = ? AND email = ?", (name, email))
+    user = cursor.fetchone()
+    conn.close()
 
-@app.get("/register.html", response_class=HTMLResponse)
-async def register(request: Request):
-    return templates.TemplateResponse("register.html", {"request": request})
+    if not user:
+        return JSONResponse(content={"message": "Користувача не знайдено."}, status_code=404)
 
-@app.get("/bug_report.html", response_class=HTMLResponse)
-async def bug_report(request: Request):
-    return templates.TemplateResponse("bug_report.html", {"request": request})
+    # 💡 ЗАМІСТЬ TO_EMAIL — використовуємо email користувача
+    message = MIMEMultipart("alternative")
+    message["From"] = SENDER_EMAIL
+    message["To"] = email  # ✅ ← ВАЖЛИВО!
+    message["Subject"] = "Відновлення паролю"
 
-@app.get("/leaderboard.html", response_class=HTMLResponse)
-async def leaderboard(request: Request):
-    return templates.TemplateResponse("leaderboard.html", {"request": request})
+    html = f"""
+    <html>
+    <body>
+        <p>Привіт, {name}!</p>
+        <p>Ваш пароль для входу: <strong>{user['password']}</strong></p>
+        <p>Будь ласка, збережіть його в безпечному місці.</p>
+    </body>
+    </html>
+    """
+    message.attach(MIMEText(html, "html"))
+
+    try:
+        with smtplib.SMTP(SMTP_SERVER, PORT) as server:
+            server.starttls()  # 🛡️ Не забудь!
+            server.login(SENDER_EMAIL, APP_PASSWORD)  #✅
+            server.sendmail(SENDER_EMAIL, email, message.as_string())  # ✅ ← Надсилаємо на email користувача
+        return JSONResponse(content={"message": "Пароль успішно надіслано."})
+    except Exception as e:
+        return JSONResponse(content={"message": f"Помилка надсилання: {str(e)}"}, status_code=500)
+
 
 # Налаштування SMTP
-PORT = 2525
-SMTP_SERVER = "smtp.mailmug.net"
-LOGIN = "nfqxj2tsmptkmaui"
-PASSWORD = "tekpt2sv3octwluf"
-SENDER_EMAIL = "diplomatanki2025@gmail.com"
-TO_EMAIL = "2dtankdiploma@gmail.com"
+SMTP_SERVER = "smtp.gmail.com"
+PORT = 587
+SENDER_EMAIL = "2dtankdiploma@gmail.com"
+APP_PASSWORD = "nejgklwyqrtucdzf"  # 🔐 ← твій app password
 
+# Маршрут для форми bug_report
 @app.post("/send-bug-report")
-async def send_bug_report(name: str = Form(...), email: str = Form(...), subject: str = Form(...), msg: str = Form(...)):
+async def send_bug_report(
+    name: str = Form(...),
+    email: str = Form(...),
+    subject: str = Form(...),
+    msg: str = Form(...)
+):
     message = MIMEMultipart('alternative')
     message['From'] = SENDER_EMAIL
-    message['To'] = TO_EMAIL
+    message['To'] = SENDER_EMAIL  # 📩 Надсилаємо розробнику
     message['Subject'] = f'Bug Report: {subject}'
 
     html = f"""
@@ -133,7 +186,7 @@ async def send_bug_report(name: str = Form(...), email: str = Form(...), subject
     <body>
         <p><strong>Name:</strong> {name}</p>
         <p><strong>Email:</strong> {email}</p>
-        <p><strong>Subject:</strong> {subject} </p>
+        <p><strong>Subject:</strong> {subject}</p>
         <p><strong>Message:</strong> {msg}</p>
     </body>
     </html>
@@ -143,17 +196,15 @@ async def send_bug_report(name: str = Form(...), email: str = Form(...), subject
 
     try:
         with smtplib.SMTP(SMTP_SERVER, PORT) as server:
-            server.login(LOGIN, PASSWORD)
-            server.sendmail(SENDER_EMAIL, TO_EMAIL, message.as_string())
-        
-        return {"msg": "Повідомлення успішно надіслано"}
+            server.starttls()
+            server.login(SENDER_EMAIL, APP_PASSWORD)
+            server.sendmail(SENDER_EMAIL, SENDER_EMAIL, message.as_string())
+        return {"message": "Bug report sent successfully"}
     
     except Exception as e:
         return {"error": str(e)}
 
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
-    
-    
-    
