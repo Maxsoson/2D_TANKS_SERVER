@@ -13,7 +13,6 @@ app = FastAPI()
 # Підключення статичних файлів
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Підключення шаблонів HTML
 templates = Jinja2Templates(directory="templates")
 
 # Маршрути сторінок
