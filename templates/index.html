@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pixel Tanks Battlefront</title>
     <link rel="stylesheet" href="{{ url_for('static', path='CSS/home.css') }}">
@@ -39,18 +39,18 @@
         <!-- Блок логіна -->
         <div class="login-wrapper">
             <div class="login-box">
-                <form id="login-form">
+                <form id="login-form" method="POST" action="/login">
                     <h1>Login</h1>
                     <div class="input-box">
-                        <input type="text" id="username" name="name" placeholder="Username" required>
+                        <input type="text" id="username" name="username" placeholder="Username" autocomplete="username" required>
                         <i class='bx bxs-user'></i>
                     </div>
                     <div class="input-box">
-                        <input type="password" id="password" name="password" placeholder="Password" required>
+                        <input type="password" id="password" name="password" placeholder="Password" autocomplete="current-password" required>
                         <i class='bx bxs-lock-alt'></i>
                     </div>
                     <div class="remember-forgot">
-                        <label><input type="checkbox">Remember me</label>
+                        <label><input type="checkbox" id="rememberMe">Remember me</label>
                         <a href="#">Forgot password?</a>
                     </div>
                     <button type="submit" class="btn">Login</button>
@@ -59,7 +59,7 @@
                         <a href="/register.html">Register</a>
                     </div>
                 </form> 
-                <div class="register-error" id="login-message" style="color: red; margin-top: 10px; text-align: center;" ></div>
+                <div class="register-error" id="login-message" style="color: red; margin-top: 10px; text-align: center;"></div>
             </div>
         </div>
         
@@ -83,7 +83,6 @@
         </div>
     </div>
 
-
     <!-- 🎵 Music Player -->
     <div id="music-player" style="position: fixed; bottom: 20px; left: 20px; z-index: 999; background: rgba(0,0,0,0.6); padding: 10px 15px; border-radius: 12px;">
         <span id="track-name" style="color: #fff; margin-right: 10px;">Now playing: Track 1</span>
@@ -100,4 +99,3 @@
     <script src="{{ url_for('static', path='JavaScript/recover-password.js') }}"></script>
 </body>
 </html>
-
