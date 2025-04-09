@@ -64,7 +64,7 @@
 │   |   |   ├── view.js
 │   |   |   └── wall.js
 |   |   |
-│   │   ├── form-validation.js
+│   │   ├── bug_report.js
 │   │   ├── home.js
 │   │   ├── leaderboard.js  
 │   │   ├── load-profile.js
