@@ -86,12 +86,8 @@ document.addEventListener("DOMContentLoaded", function() {
         tankImages[1].src = '/static/Images/skin2.png';
 
         tankImages.forEach(img => {
-            img.onload = function() {
-                console.log("🟢 Завантажено зображення танка:", img.src);
-            };
-            img.onerror = function() {
-                console.error("🔴 Помилка завантаження зображення:", img.src);
-            };
+            img.onload = () => console.log("🟢 Завантажено зображення танка:", img.src);
+            img.onerror = () => console.error("🔴 Помилка завантаження зображення:", img.src);
         });
 
         const directions = ['up', 'down', 'right', 'left'];
@@ -133,9 +129,36 @@ document.addEventListener("DOMContentLoaded", function() {
     animateTanks();
 
     // Оновлення canvas при зміні розміру вікна
-    window.addEventListener("resize", function() {
+    window.addEventListener("resize", () => {
         console.log("🔄 Оновлення розміру canvas");
         animateTanks();
     });
-});
 
+    // 🔐 Активація кнопки "Login", коли всі поля заповнені
+    const loginInputs = document.querySelectorAll(".index-login-box input");
+    const loginButton = document.querySelector(".index-login-box .index-btn");
+
+    function checkLoginInputs() {
+        let allFilled = true;
+
+        loginInputs.forEach(input => {
+            if (input.value.trim() === "") {
+                allFilled = false;
+            }
+        });
+
+        if (allFilled) {
+            loginButton.classList.add("active");
+            loginButton.disabled = false;
+        } else {
+            loginButton.classList.remove("active");
+            loginButton.disabled = true;
+        }
+    }
+
+    loginInputs.forEach(input => {
+        input.addEventListener("input", checkLoginInputs);
+    });
+
+    checkLoginInputs();
+});

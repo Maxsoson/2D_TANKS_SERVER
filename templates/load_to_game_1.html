@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Server</title>
     <link rel="stylesheet" href="{{ url_for('static', path='CSS/load_to_game_1.css') }}">
-    <script src="{{ url_for('static', path='JavaScript/home.js') }}"></script>
-    <script src="{{ url_for('static', path='JavaScript/profile.js') }}"></script> 
-    <script src="{{ url_for('static', path='JavaScript/load-profile.js') }}"></script>
 </head>
 <body>
     <canvas id="tankCanvas"></canvas>
@@ -36,5 +33,10 @@
             <p><strong>Email:</strong> <span id="player-email">...</span></p>
         </div>
     </div>
+
+    <script src="{{ url_for('static', path='JavaScript/home.js') }}"></script>
+    <script src="{{ url_for('static', path='JavaScript/profile.js') }}"></script> 
+    <script src="{{ url_for('static', path='JavaScript/load-profile.js') }}"></script>
+    
 </body>
 </html>

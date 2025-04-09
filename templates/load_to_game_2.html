@@ -7,10 +7,6 @@
     <title>Levels</title>
 
     <link rel="stylesheet" href="{{ url_for('static', path='CSS/load_to_game_2.css') }}">
-    <script src="{{ url_for('static', path='JavaScript/home.js') }}"></script>
-    <script src="{{ url_for('static', path='JavaScript/profile.js') }}"></script>
-    <script src="{{ url_for('static', path='JavaScript/load-profile.js') }}"></script>
-</head>
 <body>
     <!-- Полотно для гри -->
     <canvas id="tankCanvas"></canvas>
@@ -43,5 +39,11 @@
             <p><strong>Email:</strong> <span id="player-email">...</span></p>
         </div>
     </div>
+
+    <script src="{{ url_for('static', path='JavaScript/home.js') }}"></script>
+    <script src="{{ url_for('static', path='JavaScript/profile.js') }}"></script>
+    <script src="{{ url_for('static', path='JavaScript/load-profile.js') }}"></script>
+    
+</head>
 </body>
 </html>

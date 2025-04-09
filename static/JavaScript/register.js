@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault(); // Запобігаємо стандартній відправці форми
 
         // Перевірка CAPTCHA перед відправкою
-        const userAnswer = document.getElementById('captcha-input').value;
-        const correctAnswer = document.getElementById('captcha-answer').value;
+        const userAnswer = document.getElementById('captcha-input').value.trim();
+        const correctAnswer = document.getElementById('captcha-answer').value.trim();
 
         if (userAnswer != correctAnswer) {
             alert("❌ Incorrect CAPTCHA. Please try again.");
@@ -46,7 +46,7 @@ function generateCaptcha() {
     document.getElementById('captcha-answer').value = num1 + num2;
 }
 
-/* === Показати модальне вікно і накласти затемнення на всю сторінку === */
+/* === Показати модальне вікно і затемнення === */
 function showModal() {
     const modal = document.getElementById("success-modal");
     const overlay = document.getElementById("modal-overlay");
@@ -55,12 +55,12 @@ function showModal() {
     modal.style.display = "flex";
 
     setTimeout(() => {
-        overlay.style.opacity = "1"; 
-        modal.style.opacity = "1"; 
+        overlay.style.opacity = "1";
+        modal.style.opacity = "1";
     }, 10);
 }
 
-/* === Закрити модальне вікно і прибрати затемнення === */
+/* === Закрити модальне вікно === */
 function closeModal() {
     const modal = document.getElementById("success-modal");
     const overlay = document.getElementById("modal-overlay");
@@ -72,15 +72,16 @@ function closeModal() {
         overlay.style.display = "none";
         modal.style.display = "none";
         document.querySelector("form").reset();
-        generateCaptcha(); // Генеруємо нову CAPTCHA
+        generateCaptcha(); 
+        setupInputValidation(); // перевірити кнопки заново
     }, 300);
 }
 
-/* === Блокування кнопки поки не заповнені всі поля === */
+/* === Валідація введених даних та активація кнопки === */
 function setupInputValidation() {
     const emailInput = document.querySelector("input[type='email']");
-    const inputs = document.querySelectorAll(".input-box input");
-    const submitButton = document.querySelector(".btn");
+    const userAnswer = document.getElementById('captcha-input').value.trim();
+    const correctAnswer = document.getElementById('captcha-answer').value.trim();
 
     function isValidEmail(email) {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

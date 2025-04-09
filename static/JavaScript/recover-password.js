@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const modal = document.getElementById("modal");
-  const forgotLink = document.querySelector(".remember-forgot a");
-  const closeBtn = document.querySelector(".modal .close");
-  const recoverBtn = document.querySelector("#modal .btn");
-  const messageBox = document.getElementById("recover-message");
+  const modal = document.getElementById("index-modal");
+  const forgotLink = document.querySelector(".index-remember-forgot a"); // не забудь змінити в HTML
+  const closeBtn = document.querySelector(".index-modal .index-close");
+  const recoverBtn = document.querySelector("#index-modal .index-btn");
+  const messageBox = document.getElementById("index-recover-message");
 
   if (forgotLink && modal && closeBtn && recoverBtn) {
     forgotLink.addEventListener("click", function (e) {
@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     recoverBtn.addEventListener("click", async function () {
-      const name = document.getElementById("recover-username").value.trim();
-      const email = document.getElementById("recover-email").value.trim();
+      const name = document.getElementById("index-recover-username").value.trim();
+      const email = document.getElementById("index-recover-email").value.trim();
       messageBox.textContent = "";
 
       if (!name || !email) {
@@ -61,8 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function clearInputs() {
-      document.getElementById("recover-username").value = "";
-      document.getElementById("recover-email").value = "";
+      document.getElementById("index-recover-username").value = "";
+      document.getElementById("index-recover-email").value = "";
       messageBox.textContent = "";
     }
   }
