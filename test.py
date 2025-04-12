@@ -102,7 +102,7 @@ async def register_user(request: Request, email: str = Form(...), name: str = Fo
             #A user with this email already exists.
             elif existing_user["name"] == name:
                 return JSONResponse(content={"message": "Користувач із таким псевдонімом уже існує.", "status": "error"}, status_code=400)
-            #A user with this nickname already exists.
+    #A user with this nickname already exists.
     
     finally:
         conn.close()
