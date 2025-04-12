@@ -8,7 +8,23 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import sqlite3
 
+from datetime import datetime
+
+import logging
+from http import HTTPStatus
+
+# Клас фільтрує записи, які містять "ConnectionResetError"
+class ConnectionResetFilter(logging.Filter):
+    def filter(self, record):
+        return 'ConnectionResetError' not in record.getMessage()
+
+# Додаємо фільтр до логера Uvicorn
+logging.getLogger("uvicorn.error").addFilter(ConnectionResetFilter())
+
 app = FastAPI()
+
+    # Поточний час
+now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 # Налаштування SMTP
 SMTP_SERVER = "smtp.gmail.com"
@@ -152,78 +168,81 @@ async def recover_password(name: str = Form(...), email: str = Form(...)):
         <meta charset="UTF-8">
         <style>
         body {{
-            background-color: #f9f9f9;
-            font-family: 'Arial', sans-serif;
+            background-color: #000000;
+            font-family: 'Courier New', monospace;
+            color: #00FF00;
+            padding: 30px;
             margin: 0;
-            padding: 0;
         }}
         .container {{
             max-width: 600px;
-            margin: 40px auto;
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            color: #333;
+            margin: auto;
+            border: 2px solid #00FF00;
+            border-radius: 8px;
+            background-color: #111111;
+            padding: 20px;
+            font-size: 18px;
+            line-height: 1.6;
         }}
-        .header {{
+        h1 {{
             text-align: center;
-            margin-bottom: 20px;
-            color: #555;
+            font-size: 32px;
+            margin-bottom: 25px;
+            color: #00FF00;
         }}
-        /* Секція для опціонального зображення.
-            Якщо шлях до зображення не вказано, блок не відобразиться. */
         .optional-image {{
             display: block;
             max-width: 100%;
             height: auto;
             margin: 0 auto 20px;
             border-radius: 8px;
+            border: 2px solid #00FF00;
         }}
         .content {{
-            font-size: 16px;
-            line-height: 1.5;
-            color: #666;
+            color: #d0ffd0;
+            font-size: 18px;
         }}
         .password-box {{
-            background-color: #e0f7fa;
-            border: 1px solid #b2ebf2;
-            padding: 15px;
+            background-color: #000;
+            border: 2px dashed #00FF00;
+            padding: 16px;
             text-align: center;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             border-radius: 5px;
             margin: 20px 0;
-            color: #00796b;
+            color: #39ff14;
         }}
         .footer {{
             text-align: center;
-            font-size: 12px;
-            color: #aaa;
+            font-size: 14px;
+            color: #888;
             margin-top: 30px;
         }}
         </style>
     </head>
     <body>
         <div class="container">
-        <h1 class="header">Відновлення паролю</h1>
-        
-        <!-- Опціональне зображення: заповніть src, якщо потрібно показати картинку -->
-        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.goodfon.ru%2Fgames%2Fwallpaper-world-of-tanks-game-7708.html&psig=AOvVaw2hzMr6U36SzqKu0KoQXXii&ust=1744225297214000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLD-sOaPyYwDFQAAAAAdAAAAABAE" alt="Optional image" class="optional-image">
-        
-        <div class="content">
-            <p>Привіт, {name}!</p>
-            <p>Ваш пароль для входу:</p>
-            <div class="password-box">{user['password']}</div>
-            <p>Будь ласка, збережіть його в безпечному місці.</p>
-        </div>
-        <div class="footer">
-            <p>Якщо ви не запитували відновлення паролю, ігноруйте цей лист.</p>
-        </div>
+            <h1>🔐 Відновлення паролю</h1>
+
+            <!-- Опціональне зображення -->
+            <img src="https://i.ibb.co/ZVJ2yNz/logo.png" alt="Game Logo" class="optional-image">
+
+            <div class="content">
+                <p>Привіт, {name}!</p>
+                <p>Ваш пароль для входу:</p>
+                <div class="password-box">{user['password']}</div>
+                <p>Будь ласка, збережіть його в безпечному місці.</p>
+            </div>
+
+            <div class="footer">
+                <p>Якщо ви не запитували відновлення паролю, просто ігноруйте цей лист.</p>
+            </div>
         </div>
     </body>
     </html>
     """
+
 
 
     message.attach(MIMEText(html, "html"))
@@ -252,15 +271,53 @@ async def send_bug_report(
 
     html = f"""
     <html>
-    <body>
-        <p><strong>Name:</strong> {name}</p>
-        <p><strong>Email:</strong> {email}</p>
-        <p><strong>Subject:</strong> {subject}</p>
-        <p><strong>Message:</strong> {msg}</p>
+    <body style="background-color: #000000; font-family: 'Courier New', monospace; color: #00FF00; padding: 30px;">
+        <div style="max-width: 600px; margin: auto; border: 2px solid #00FF00; border-radius: 8px; padding: 20px; background-color: #111111; font-size: 18px; line-height: 1.6;">
+
+        <h1 style="text-align: center; font-size: 32px; margin-bottom: 25px; color: #00FF00;">🛠 BUG REPORT</h1>
+
+        <div style="margin-bottom: 20px;">
+            <p style="margin: 0; color: #39ff14; font-size: 20px;"><strong>Name:</strong></p>
+            <div style="border: 2px solid #00FF00; padding: 12px; border-radius: 4px; background-color: #000; color: #d0ffd0; font-size: 18px;">
+            {name}
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <p style="margin: 0; color: #39ff14; font-size: 20px;"><strong>Email:</strong></p>
+            <div style="border: 2px solid #00FF00; padding: 12px; border-radius: 4px; background-color: #000; color: #d0ffd0; font-size: 18px;">
+            {email}
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <p style="margin: 0; color: #39ff14; font-size: 20px;"><strong>Subject:</strong></p>
+            <div style="border: 2px solid #00FF00; padding: 12px; border-radius: 4px; background-color: #000; color: #d0ffd0; font-size: 18px;">
+            {subject}
+            </div>
+        </div>
+
+        <div>
+            <p style="margin: 0; color: #39ff14; font-size: 20px;"><strong>Message:</strong></p>
+            <div style="background-color: #222; border: 2px dashed #00FF00; padding: 16px; border-radius: 4px; white-space: pre-wrap; color: #d0ffd0; font-size: 18px;">
+            {msg}
+            </div>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <p style="margin: 0; color: #39ff14; font-size: 20px;"><strong>Report Timestamp:</strong></p>
+            <div style="border: 2px solid #00FF00; padding: 12px; border-radius: 4px; background-color: #000; color: #d0ffd0; font-size: 18px;">
+            {now}
+            </div>
+        </div>
+
+        <p style="margin-top: 35px; font-size: 14px; text-align: center; color: #888;">This message was auto-generated by Pixel Tanks Battlefront</p>
+        </div>
     </body>
     </html>
     """
-    
+
+
     message.attach(MIMEText(html, "html"))
 
     try:
