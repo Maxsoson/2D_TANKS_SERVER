@@ -258,7 +258,7 @@ a.index-btn[href*="discord"]:hover {
     z-index: 10;
 }
 
-.index-music-btn {
+.music-btn {
     background-color: #90EE90;
     border: none;
     color: #000;
@@ -271,22 +271,22 @@ a.index-btn[href*="discord"]:hover {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.index-music-btn:hover {
+.music-btn:hover {
     background-color: #6fd26f;
     transform: scale(1.05);
 }
 
-#index-volume-slider {
+#volume-slider {
     width: 100px;
     accent-color: #90EE90;
     margin-left: 10px;
 }
 
-.index-music-btn.index-muted {
+.music-btn.muted {
     background-color: #ff4c4c;
 }
 
-.index-music-btn.index-unmuted {
+.music-btn.unmuted {
     background-color: #90EE90;
 }
 
