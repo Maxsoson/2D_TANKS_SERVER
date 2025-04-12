@@ -1,0 +1,183 @@
+body {
+  background-color: #6e6e6e;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.canvas-wrapper {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hud {
+  width: 220px;
+  height: 416px;
+  backdrop-filter: blur(6px);
+  background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
+  color: #dcdcdc;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+  border: 2px solid #555555;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(85, 85, 85, 0.8);
+}
+
+.hud p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  text-shadow: 0 0 6px #555, 0 0 10px #444;
+}
+
+.hud span {
+  color: #ffffff;
+}
+
+.game-timer {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 32px;
+  font-family: 'Press Start 2P', monospace;
+  color: white;
+  text-shadow: 0 0 8px #00ffcc, 0 0 16px #00ffcc;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.timer-frame {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  border: 4px solid #28ff89;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 18px;
+  color: #ffffff;
+  text-shadow: 0 0 5px #28ff89, 0 0 10px #28ff89;
+  z-index: 10;
+}
+
+.canvas-wrapper {
+  position: relative;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pause-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.pause-modal-content {
+  width: 480px;
+  max-width: 90%;
+  background: rgba(0, 0, 0, 0.9);
+  border: 4px solid #00ff44;
+  padding: 40px 60px;
+  border-radius: 16px;
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  color: #ffffff;
+  text-shadow: 0 0 5px #00ff44, 0 0 10px #00ff44;
+  box-shadow: 0 0 20px #00ff44;
+}
+
+.pause-modal-content h1 {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.pause-modal-content p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* 🟥 LED-таймер у стилі цифрового годинника */
+.led-timer {
+  position: absolute;
+  top: -55px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1c1c1c;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: 2px solid #444;
+  box-shadow: 0 0 3px rgba(200, 200, 200, 0.1);
+  font-family: 'Courier New', monospace;
+  font-size: 28px;
+  color: #dcdcdc;
+  text-shadow: 0 0 6px #888, 0 0 10px #aaa;
+  z-index: 10;
+}
+
+/* Інструкції по паузі, розташовані під полем гри */
+.pause-instructions {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #cccccc;
+  padding: 10px 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  text-align: center;
+  border: 2px solid #555555;
+  border-radius: 8px;
+  box-shadow: 0 0 3px rgba(85, 85, 85, 0.8);
+  z-index: 5;
+}
+
+.music-btn:hover {
+  background-color: #6fd26f;
+  transform: scale(1.05);
+}
+
+#volume-slider {
+  width: 100px;
+  accent-color: #90EE90;
+  margin-left: 10px;
+}
+
+.music-btn.muted {
+  background-color: #ff4c4c;
+}
+
+.music-btn.unmuted {
+  background-color: #90EE90;
+}

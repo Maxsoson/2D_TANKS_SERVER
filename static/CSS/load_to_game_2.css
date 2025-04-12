@@ -1,0 +1,343 @@
+/* Основні стилі */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Silkscreen', sans-serif;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+}
+
+#tankCanvas {
+    position: absolute;
+    background: #000;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+/* Заголовок */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 1;
+    flex-direction: column;
+}
+
+.overlay h1 {
+    width: 100%;
+    text-align: center;
+    color: #00FF00;
+    text-shadow: 0 0 2px #00FF00, 0 0 1.5px #00FF00;
+    font-size: 64px;
+    letter-spacing: 10px;
+    margin-top: 40px;
+}
+
+/* Кнопки рівнів */
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 4 кнопки в ряд */
+    gap: 15px 25px; /* відступи між кнопками */
+    justify-content: center;
+    align-items: center;
+    margin: 30px auto 0 auto;
+    width: fit-content;
+}
+
+
+.pixel-button {
+    width: 120px;
+    height: 80px;
+    font-size: 24px;
+    background-color: #8B0000;
+    color: #fff;
+    border: 2px solid #FF0000;
+    border-radius: 5px;
+    box-shadow: 0 0 1.5px #FF0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.pixel-button:hover {
+    background-color: #FF0000;
+    color: #000;
+    box-shadow: 0 0 1.5px #FF0000;
+}
+
+.pixel-button.active {
+    background-color: #003300;
+    border: 2px solid #00FF00;
+    box-shadow: 0 0 1.5px #00FF00;
+}
+
+.back-button {
+    background-color: #003300;
+    color: #00FF00;
+    border: 2px solid #00FF00;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 20px;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: block;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 0 1.5px #00FF00;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    background-color: #00FF00;
+    color: #000;
+}
+
+.profile-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+}
+
+.profile-button {
+    background-color: #111;
+    color: #00FF00;
+    border: 2px solid #00AA00;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.profile-button:hover {
+    background-color: #00AA00;
+    color: #000;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 3;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 25px 40px;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Silkscreen', sans-serif;
+    box-shadow: 0 0 1.5px #00FF00;
+    width: auto;
+    min-width: 320px;
+    max-width: 440px;
+    position: relative;
+    border: 2px solid #00FF00;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.modal-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.player-info p {
+    font-size: 16px;
+    color: #00FF00;
+    margin: 10px 0;
+}
+
+.player-info strong {
+    color: #00FF88;
+}
+
+.password-change-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    max-width: 280px;
+    width: 100%;
+}
+
+.modal-content h2 {
+    font-size: 24px;
+    color: white;
+    text-shadow: 0 0 1.5px #00FF00;
+}
+
+.password-change-form input {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 2px solid #00FF00;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-family: 'Silkscreen', sans-serif;
+    font-size: 14px;
+    color: #00FF00;
+    text-align: center;
+    outline: none;
+    box-shadow: 0 0 1.5px #00FF00;
+    transition: 0.2s;
+    width: 100%;
+    padding-right: 40px;
+}
+
+.change-password-button,
+.change-view-button {
+    background-color: #111;
+    color: #00FF00;
+    border: 2px solid #00AA00;
+    padding: 8px 20px;
+    font-family: 'Silkscreen', sans-serif;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 30px auto 0 auto;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.change-password-button:hover,
+.change-view-button:hover {
+    background-color: #00FF00;
+    color: #000;
+    box-shadow: 0 0 1.5px #00FF00;
+}
+
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #00FF00;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.logout-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.logout-button {
+    background-color: #8B0000;
+    color: #fff;
+    border: 2px solid #FF0000;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 10px 25px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 0 1.5px #FF0000;
+    transition: all 0.2s ease-in-out;
+}
+
+.logout-button:hover {
+    background-color: #FF0000;
+    color: #000;
+    box-shadow: 0 0 1.5px #FF0000;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: red;
+}
+
+.hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+    position: absolute;
+}
+
+.modal-content p {
+    font-size: 16px;
+    color: #00FF00;
+    margin: 5px 0;
+}
+
+.modal-content strong {
+    color: #00FF88;
+}
+
+.music-btn {
+    background-color: #90EE90;
+    border: none;
+    color: #000;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.music-btn:hover {
+    background-color: #6fd26f;
+    transform: scale(1.05);
+}
+
+#volume-slider {
+    width: 100px;
+    accent-color: #90EE90;
+    margin-left: 10px;
+}
+
+.music-btn.muted {
+    background-color: #ff4c4c;
+}
+
+.music-btn.unmuted {
+    background-color: #90EE90;
+}

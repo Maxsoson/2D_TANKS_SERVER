@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pixel Tanks Battlefront</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='CSS/register.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='CSS/style.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
@@ -13,10 +13,10 @@
     <canvas id="tankCanvas"></canvas>
 
     <main>
-        <nav class="navbar">
-            <div class="logo">
-                <img src="{{ url_for('static', path='Images/logo.png') }}" alt="Logo" class="logo-icon">
-                <span class="logo-text">Pixel Tanks Battlefront</span>
+        <nav class="index-navbar">
+            <div class="index-logo">
+                <img src="{{ url_for('static', path='Images/logo.png') }}" alt="Logo" class="index-logo-icon">
+                <span class="index-logo-text">Pixel Tanks Battlefront</span>
             </div>
             <ul>
                 <li><a href="index.html">Home</a></li>
@@ -26,31 +26,31 @@
             </ul>
         </nav>
 
-        <div class="content">
-            <div class="login-wrapper">
-                <div class="login-box">
+        <div class="index-content">
+            <div class="index-login-wrapper">
+                <div class="index-login-box">
                     <form id="registerForm">
                         <h1>Registration</h1>
-                        <div class="input-box">
+                        <div class="index-input-box">
                             <input type="email" id="email" name="email" placeholder="Email" required>
                             <i class='bx bx-envelope'></i>
                         </div>
-                        <div class="input-box">
+                        <div class="index-input-box">
                             <input type="text" id="name" name="name" placeholder="Username" required>
                             <i class='bx bxs-user'></i>
                         </div>
-                        <div class="input-box">
+                        <div class="index-input-box">
                             <input type="password" id="password" name="password" placeholder="Password" required>
                             <i class='bx bxs-lock-alt'></i>
                         </div>
 
-                        <div class="input-box">
+                        <div class="index-input-box">
                             <label id="captcha-question"></label>
                             <input type="text" id="captcha-input" placeholder="Enter answer" required>
                             <input type="hidden" id="captcha-answer">
                         </div>
 
-                        <button type="submit" class="btn">Finish</button>
+                        <button type="submit" class="index-btn">Finish</button>
                         <p id="message"></p>
                     </form>
                 </div>
@@ -58,10 +58,9 @@
         </div>
     </main>
 
-    <!-- Затемнення сторінки -->
-    <div id="modal-overlay"></div>
 
     <!-- Модальне вікно -->
+    <div id="modal-overlay"></div>
     <div id="success-modal" class="modal">
         <div class="modal-content">
             <h2>✅ Registration Successful!</h2>
@@ -70,9 +69,20 @@
         </div>
     </div>
 
-    <script src="{{ url_for('static', path='/JavaScript/home.js') }}"></script>
-    <script src="{{ url_for('static', path='/JavaScript/register.js') }}"></script>
+
+    <!-- 🎵 Music Player -->
+    <div id="music-player" style="position: fixed; bottom: 20px; left: 20px; z-index: 999; background: rgba(0,0,0,0.6); padding: 10px 15px; border-radius: 12px;">
+        <span id="track-name" style="color: #fff; margin-right: 10px;">Now playing: Track 1</span>
+        <button id="play-btn" class="music-btn">▶︎</button>
+        <button id="next-btn" class="music-btn">⏭</button>
+        <button id="mute-btn" class="music-btn muted">🔈</button>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" style="vertical-align: middle;">
+        <audio id="audio-player"></audio>
+    </div> 
+
+    <script src="{{ url_for('static', path='JavaScript/home.js') }}"></script>
+    <script src="{{ url_for('static', path='JavaScript/music-player.js') }}"></script>
+    <script src="{{ url_for('static', path='JavaScript/register.js') }}"></script>
 
 </body>
 </html>
-

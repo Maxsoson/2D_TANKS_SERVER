@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact form</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='CSS/bug_report.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='CSS/style.css') }}">
 </head>
 <body>
     <canvas id="tankCanvas"></canvas>
 
-    <nav class="navbar">
-        <div class="logo">
-            <img src="{{ url_for('static', path='Images/logo.png') }}" alt="Logo" class="logo-icon">
-            <span class="logo-text">Pixel Tanks Battlefront</span>
+    <nav class="index-navbar">
+        <div class="index-logo">
+            <img src="{{ url_for('static', path='Images/logo.png') }}" alt="Logo" class="index-logo-icon">
+            <span class="index-logo-text">Pixel Tanks Battlefront</span>
         </div>
         <ul>
             <li><a href="index.html">Home</a></li>
@@ -56,8 +56,19 @@
         </div>
     </div>
 
-    <script src="{{ url_for('static', path='/JavaScript/home.js') }}"></script>
-    <script src="{{ url_for('static', path='/JavaScript/form-validation.js') }}"></script>
+    <!-- 🎵 Music Player -->
+    <div id="music-player" style="position: fixed; bottom: 20px; left: 20px; z-index: 999; background: rgba(0,0,0,0.6); padding: 10px 15px; border-radius: 12px;">
+        <span id="track-name" style="color: #fff; margin-right: 10px;">Now playing: Track 1</span>
+        <button id="play-btn" class="music-btn">▶︎</button>
+        <button id="next-btn" class="music-btn">⏭</button>
+        <button id="mute-btn" class="music-btn muted">🔈</button>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" style="vertical-align: middle;">
+        <audio id="audio-player"></audio>
+    </div>
+
+    <script src="{{ url_for('static', path='JavaScript/home.js') }}"></script>
+    <script src="{{ url_for('static', path='JavaScript/music-player.js') }}"></script>
+    <script src="{{ url_for('static', path='JavaScript/bug_report.js') }}"></script>
 </body>
 </html>
 
