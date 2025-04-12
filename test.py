@@ -123,7 +123,6 @@ async def register_user(request: Request, email: str = Form(...), name: str = Fo
     finally:
         conn.close()
 
-
 # Маршрут для авторизації користувачів
 @app.post("/login")
 async def login_user(name: str = Form(...), password: str = Form(...)):
@@ -243,8 +242,6 @@ async def recover_password(name: str = Form(...), email: str = Form(...)):
     </html>
     """
 
-
-
     message.attach(MIMEText(html, "html"))
 
     try:
@@ -329,7 +326,6 @@ async def send_bug_report(
     
     except Exception as e:
         return {"error": str(e)}
-
 
 if __name__ == "__main__":
     import uvicorn
