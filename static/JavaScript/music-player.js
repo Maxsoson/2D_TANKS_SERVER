@@ -11,19 +11,19 @@ const tracks = [
 ];
 
 let currentTrack = 0;
-const audio = document.getElementById("index-audio-player");
-const playBtn = document.getElementById("index-play-btn");
-const nextBtn = document.getElementById("index-next-btn");
-const muteBtn = document.getElementById("index-mute-btn");
-const volumeSlider = document.getElementById("index-volume-slider");
-const trackName = document.getElementById("index-track-name");
+const audio = document.getElementById("audio-player");
+const playBtn = document.getElementById("play-btn");
+const nextBtn = document.getElementById("next-btn");
+const muteBtn = document.getElementById("mute-btn");
+const volumeSlider = document.getElementById("volume-slider");
+const trackName = document.getElementById("track-name");
 
 let isPlaying = false;
 
 function updateMuteIcon() {
   muteBtn.textContent = audio.muted ? "🔇" : "🔈";
-  muteBtn.classList.toggle("index-muted", audio.muted);
-  muteBtn.classList.toggle("index-unmuted", !audio.muted);
+  muteBtn.classList.toggle("muted", audio.muted);
+  muteBtn.classList.toggle("unmuted", !audio.muted);
 }
 
 // Початкове налаштування треку
