@@ -50,7 +50,7 @@
                             <input type="hidden" id="captcha-answer">
                         </div>
 
-                        <button type="submit" class="index-btn">Finish</button>
+                        <button type="submit" class="index-btn" disabled>Finish</button>
                         <p id="message"></p>
                     </form>
                 </div>
@@ -80,9 +80,9 @@
         <audio id="audio-player"></audio>
     </div> 
 
-    <script src="{{ url_for('static', path='JavaScript/home.js') }}"></script>
-    <script src="{{ url_for('static', path='JavaScript/music-player.js') }}"></script>
-    <script src="{{ url_for('static', path='JavaScript/register.js') }}"></script>
+    <script src="{{ url_for('static', path='JavaScript/home.js') }}" defer></script>
+    <script src="{{ url_for('static', path='JavaScript/music-player.js') }}" defer></script>
+    <script src="{{ url_for('static', path='JavaScript/register.js') }}" defer></script>
 
 </body>
 </html>
