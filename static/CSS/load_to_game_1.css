@@ -1,11 +1,15 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: inherit;
 }
 
-html,
-body {
-    overflow: hidden;
+html, body {
+    font-family: 'Silkscreen', sans-serif;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 #tankCanvas {
@@ -17,6 +21,7 @@ body {
     left: 0;
 }
 
+/* Заголовок */
 .overlay {
     position: absolute;
     top: 0;
@@ -31,17 +36,19 @@ body {
 }
 
 h1 {
-    color: #1c881c;
-    font-size: 80px;
-    text-shadow: 
-        -1px -1px 0 white,
-        1px -1px 0 white,
-        -1px 1px 0 white,
-        3px 3px 0 white;
-    font-family: 'Pixelify Sans', cursive;
-    margin-top: 20px;
+    color: #00FF00;
+    text-shadow:
+        0 0 1px #00FF00,
+        0 0 2px #00FF00,
+        0 0 2px #00AA00;
+    font-size: 68px;
+    letter-spacing: 9px;
+    text-align: center;
+    padding-top: 50px;
+    margin-top: 40px;
 }
 
+/* Кнопки гри */
 .button-container {
     position: absolute;
     top: 50%;
@@ -53,24 +60,28 @@ h1 {
 }
 
 .pixel-button {
-    background-color: #1c881c;
-    color: #333;
-    border: 2px solid #fff;
+    background-color: #111;
+    color: #00FF00;
+    border: 2px solid #00AA00; 
     border-radius: 5px;
-    font-family: 'Pixelify Sans', cursive;
     font-size: 37px;
     padding: 20px 33px;
+    text-decoration: none;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
-    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 1;
 }
 
 .pixel-button:hover {
-    background-color: #1c881c;
-    color: #fff;
+    background-color: #00AA00;
+    color: #000;
 }
 
-/* 🔹 Стилі для кнопки профілю */
+/* Кнопка профілю */
 .profile-container {
     position: absolute;
     top: 20px;
@@ -79,11 +90,10 @@ h1 {
 }
 
 .profile-button {
-    background-color: #1c881c; /* Темно-зелений фон */
-    color: #fff; /* Білий текст */
-    border: 2px solid #fff; /* Біла рамка */
+    background-color: #111;
+    color: #00FF00;
+    border: 2px solid #00AA00;
     border-radius: 5px;
-    font-family: 'Pixelify Sans', cursive;
     font-size: 20px;
     padding: 10px 20px;
     text-decoration: none;
@@ -92,11 +102,11 @@ h1 {
 }
 
 .profile-button:hover {
-    background-color: #00563B; 
-    color: #fff;
+    background-color: #00AA00;
+    color: #000;
 }
 
-/* 🔹 Стилі для модального вікна */
+/* Модальне вікно */
 .modal {
     display: none;
     position: fixed;
@@ -112,21 +122,142 @@ h1 {
     align-items: center;
 }
 
-/* 🔹 Оформлення блоку профілю */
 .modal-content {
-    background-color: #222;
-    padding: 25px;
-    border-radius: 10px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 25px 40px;
+    border-radius: 12px;
     color: white;
-    font-family: 'Pixelify Sans', cursive;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-    width: 350px;
+    font-family: 'Silkscreen', sans-serif;
+    box-shadow: 0 0 2px #00FF00;
+    max-width: 720px;       
+    width: auto;
+    min-width: 300px;             
     position: relative;
-    border: 3px solid #1c881c;
+    border: 2px solid #00FF00;
+    gap: 30px;
+    box-sizing: border-box;
 }
 
-/* 🔹 Стиль кнопки закриття */
+.modal-section {
+    transition: all 0.3s ease;
+}
+
+.hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+    position: absolute;
+}
+
+
+/* Контейнер колонок */
+.modal-profile-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    gap: 24px; /* Було 40px */
+}
+
+
+/* Інформація про гравця */
+.player-info {
+    width: 50%;
+    max-width: 280px;
+}
+
+.player-info p {
+    font-size: 16px;
+    color: #00FF00;
+    margin: 6px 0;
+    white-space: nowrap;
+}
+
+.player-info strong {
+    color: #00FF88;
+}
+
+/* Форма зміни паролю */
+.password-change-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    width: 50%;
+    max-width: 280px;
+}
+
+.password-change-form input {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 2px solid #00FF00;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-family: 'Silkscreen', sans-serif;
+    font-size: 14px;
+    color: #00FF00;
+    text-align: center;
+    outline: none;
+    box-shadow: 0 0 2px #00FF00;
+    transition: 0.2s;
+}
+
+.password-change-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    max-width: 280px;
+    width: 100%;
+}
+
+.change-password-button {
+    background-color: #003300;
+    color: #00FF00;
+    border: 2px solid #00FF00;
+    border-radius: 5px;
+    padding: 10px;
+    font-family: 'Silkscreen', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.change-password-button:hover {
+    background-color: #00FF00;
+    color: #000;
+    box-shadow: 0 0 2px #00FF00;
+}
+
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.password-field input {
+    width: 100%;
+    padding-right: 40px; /* залишаємо місце для кнопки 👁 */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #00FF00;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+}
+
+
+/* Закриття */
 .close {
     position: absolute;
     top: 10px;
@@ -140,13 +271,84 @@ h1 {
     color: red;
 }
 
-/* 🔹 Стилі для тексту */
-.modal-content p {
-    font-size: 20px;
-    margin: 10px 0;
+/* Log Out */
+.logout-button {
+    background-color: #8B0000;
+    color: #fff;
+    border: 2px solid #FF0000;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 10px 25px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 0 8px #FF0000;
+    transition: all 0.2s ease-in-out;
+    margin-top: 10px;
 }
 
-.modal-content strong {
-    color: #1c881c;
-    font-size: 22px;
+.logout-button:hover {
+    background-color: #FF0000;
+    color: #000;
+    box-shadow: 0 0 8px #FF0000;
+}
+
+.logout-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 2px #FF3333;
+}
+
+.logout-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.change-view-button {
+    background-color: #111;
+    color: #00FF00;
+    border: 2px solid #00AA00;
+    padding: 8px 20px;
+    font-family: 'Silkscreen', sans-serif;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 30px auto 0 auto; /* 🟢 auto по боках — центр */
+    display: block; 
+    transition: all 0.3s ease;
+}
+
+.change-view-button:hover {
+    background-color: #00FF00;
+    color: #000;
+}
+
+.music-btn {
+    background-color: #90EE90;
+    border: none;
+    color: #000;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.music-btn:hover {
+    background-color: #6fd26f;
+    transform: scale(1.05);
+}
+
+#volume-slider {
+    width: 100px;
+    accent-color: #90EE90;
+    margin-left: 10px;
+}
+
+.music-btn.muted {
+    background-color: #ff4c4c;
+}
+
+.music-btn.unmuted {
+    background-color: #90EE90;
 }

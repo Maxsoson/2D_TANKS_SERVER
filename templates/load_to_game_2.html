@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Levels</title>
 
     <link rel="stylesheet" href="{{ url_for('static', path='CSS/load_to_game_2.css') }}">
+
+    <script src="{{ url_for('static', path='JavaScript/home.js') }}" defer></script>
+    <script src="{{ url_for('static', path='JavaScript/profile.js') }}" defer></script> 
+    <script src="{{ url_for('static', path='JavaScript/load-profile.js') }}" defer></script>
+    <script src="{{ url_for('static', path='JavaScript/music-player.js') }}" defer></script>
+    
+</head>
 <body>
     <!-- Полотно для гри -->
     <canvas id="tankCanvas"></canvas>
@@ -19,13 +26,19 @@
     <div class="overlay">
         <h1>LEVELS</h1>
 
-        <a href="load_to_game_1.html"class="back-button">Back</a>
+        <!-- Кнопка "Back" -->
+        <a href="load_to_game_1.html" class="back-button">Back</a>
 
         <div class="button-container">
-            <a href="tanki.html" class="pixel-button">1</a>
-            <a href="#" class="pixel-button">SOON...</a>
-            <a href="#" class="pixel-button">SOON...</a>
-            <a href="#" class="pixel-button">SOON...</a>
+            <a href="./tanki.html" class="pixel-button">1</a>
+            <a href="./tanki.html" class="pixel-button">2</a>
+            <a href="./tanki.html" class="pixel-button">3</a>
+            <a href="./tanki.html" class="pixel-button">4</a>
+            <a href="./tanki.html" class="pixel-button">5</a>
+            <a href="./tanki.html" class="pixel-button">6</a>
+            <a href="./tanki.html" class="pixel-button">7</a>
+            <a href="./tanki.html" class="pixel-button">8</a>
+            <a href="./tanki.html" class="pixel-button">9</a>
         </div>
     </div>
 
@@ -34,16 +47,55 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Player Profile</h2>
-            <p><strong>Username:</strong> <span id="player-name">...</span></p>
-            <p><strong>Score:</strong> <span id="player-score">1500</span></p>
-            <p><strong>Email:</strong> <span id="player-email">...</span></p>
+            <div class="modal-profile-container">
+                <!-- 🔸 Інформація про гравця -->
+                <div class="modal-section" id="player-info-block">
+                    <div class="player-info">
+                        <p><strong>Email:</strong> <span id="player-email">...</span></p>
+                        <p><strong>Username:</strong> <span id="player-name">...</span></p>
+                        <p><strong>Score:</strong> <span id="player-score">1500</span></p>
+                        <p><strong>Place in Leaderboard:</strong> <span id="Place-In-Leaderboard">1</span></p>
+                    </div>                    
+                    <button class="change-view-button" onclick="togglePasswordForm(true)">Change Password</button>
+                </div>
+
+                <!-- 🔸 Форма зміни паролю -->
+                <div class="modal-section hidden" id="password-form-block">
+                    <form class="password-change-form">
+                        <div class="password-field">
+                            <input type="password" placeholder="Old Password" required>
+                            <button type="button" class="toggle-password">👁</button>
+                        </div>
+                        <div class="password-field">
+                            <input type="password" placeholder="New Password" required>
+                            <button type="button" class="toggle-password">👁</button>
+                        </div>
+                        <div class="password-field">
+                            <input type="password" placeholder="Confirm Password" required>
+                            <button type="button" class="toggle-password">👁</button>
+                        </div>
+                        <button type="submit" class="change-password-button">Submit</button>
+                    </form>
+                    <button class="change-view-button" onclick="togglePasswordForm(false)">Back</button>
+                </div>
+            </div>
+
+            <div class="logout-wrapper">
+                <button class="logout-button" onclick="handleLogout()">Log Out</button>
+            </div>
         </div>
     </div>
 
-    <script src="{{ url_for('static', path='JavaScript/home.js') }}"></script>
-    <script src="{{ url_for('static', path='JavaScript/profile.js') }}"></script>
-    <script src="{{ url_for('static', path='JavaScript/load-profile.js') }}"></script>
-    
-</head>
+    <!-- 🎵 Music Player -->
+    <div id="music-player" style="position: fixed; bottom: 20px; left: 20px; z-index: 999; background: rgba(0,0,0,0.6); padding: 10px 15px; border-radius: 12px;">
+        <span id="track-name" style="color: #fff; margin-right: 10px;">Now playing: Track 1</span>
+        <button id="play-btn" class="music-btn">▶︎</button>
+        <button id="next-btn" class="music-btn">⏭</button>
+        <button id="mute-btn" class="music-btn muted">🔈</button>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" style="vertical-align: middle;">
+        <audio id="audio-player"></audio>
+    </div> 
+
 </body>
 </html>
+
