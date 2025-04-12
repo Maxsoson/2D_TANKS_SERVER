@@ -16,13 +16,10 @@
 │   │   └── troll1.mp3
 |   |
 │   ├── CSS/
-│   │   ├── bug_report.css
-│   │   ├── home.css
-│   │   ├── leaderboard.css
+│   │   ├── game.css
 │   │   ├── load_to_game_1.css
 │   │   ├── load_to_game_2.css
-│   │   ├── register.css
-│   │   └── tanki.css
+│   │   └── style.css
 |   |
 │   ├── Images/
 |   |   ├──assets/
@@ -65,7 +62,8 @@
 │   |   |   └── wall.js
 |   |   |
 │   │   ├── bug_report.js
-│   │   ├── home.js
+│   │   ├── home.js   
+│   │   ├── hud.js
 │   │   ├── leaderboard.js  
 │   │   ├── load-profile.js
 │   │   ├── login.js
