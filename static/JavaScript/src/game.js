@@ -20,14 +20,14 @@ export default class Game {
         // 🎮 Обробка клавіші "P" — пауза
         window.addEventListener('keydown', (e) => {
             if (e.code === 'KeyP') {
-              this.paused = !this.paused;
-          
-              const pauseModal = document.getElementById("pauseModal");
-              if (pauseModal) {
+                this.paused = !this.paused;
+
+                const pauseModal = document.getElementById("pauseModal");
+                if (pauseModal) {
                 pauseModal.style.display = this.paused ? "flex" : "none";
-              }
+                }
             }
-          });          
+        });          
     }
 
     async init() {
