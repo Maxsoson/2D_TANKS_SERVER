@@ -73,14 +73,15 @@ function closeModal() {
         modal.style.display = "none";
         document.querySelector("form").reset();
         generateCaptcha(); // Генеруємо нову CAPTCHA
+        checkInputs(); // оновлюємо валідацію
     }, 300);
 }
 
 /* === Блокування кнопки поки не заповнені всі поля === */
 function setupInputValidation() {
     const emailInput = document.querySelector("input[type='email']");
-    const inputs = document.querySelectorAll(".input-box input");
-    const submitButton = document.querySelector(".btn");
+    const inputs = document.querySelectorAll("#registerForm input");
+    const submitButton = document.querySelector(".index-btn");
 
     function isValidEmail(email) {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -110,5 +111,5 @@ function setupInputValidation() {
         input.addEventListener("input", checkInputs);
     });
 
-    checkInputs(); // Перевіряємо на старті
+    checkInputs(); // перевіряємо одразу при завантаженні
 }
