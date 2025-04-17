@@ -6,3 +6,4 @@ email-validator
 sqlalchemy
 asyncpg
 python-multipart
+psycopg2-binary
