@@ -15,8 +15,6 @@ from datetime import datetime
 import logging
 
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-
 # --- Додано фільтр логів для винятку ConnectionResetError ---
 class ConnectionResetFilter(logging.Filter):
     def filter(self, record):
@@ -158,4 +156,7 @@ async def send_bug_report(name: str = Form(...), email: str = Form(...), subject
 # --- Змінено порт на 10000 (рекомендований Render) ---
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=10000)
+    uvicorn.run("main:app", host="0.0.0.0", port=10000)
+
+
+
