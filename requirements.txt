@@ -5,3 +5,4 @@ aiofiles
 email-validator
 sqlalchemy
 asyncpg
+python-multipart
