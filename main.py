@@ -29,8 +29,10 @@ if not DATABASE_URL:
 
 try:
     engine = create_async_engine(
-        DATABASE_URL + "?sslmode=require",
-        echo=True
+    DATABASE_URL,
+    echo=True,
+    connect_args={"ssl": ssl.create_default_context()}
+)
     )
     async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
     Base = declarative_base()
