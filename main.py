@@ -33,7 +33,6 @@ try:
     echo=True,
     connect_args={"ssl": ssl.create_default_context()}
 )
-    )
     async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
     Base = declarative_base()
 except Exception as e:
