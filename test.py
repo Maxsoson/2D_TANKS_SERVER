@@ -24,7 +24,8 @@ logging.getLogger("uvicorn.error").addFilter(ConnectionResetFilter())
 app = FastAPI()
 
     # Поточний час
-now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S") # Час по UTS-0
+#now = datetime.now(ZoneInfo("Europe/London")).strftime("%Y-%m-%d %H:%M:%S") # Час в Лондоні з урахуванням літнього і зимнього часу
 
 # Налаштування SMTP
 SMTP_SERVER = "smtp.gmail.com"
