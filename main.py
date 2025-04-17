@@ -29,10 +29,8 @@ if not DATABASE_URL:
 
 try:
     engine = create_async_engine(
-    DATABASE_URL + "?sslmode=require",
-    echo=True
-)
-
+        DATABASE_URL + "?sslmode=require",
+        echo=True
     )
     async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
     Base = declarative_base()
