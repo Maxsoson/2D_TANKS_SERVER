@@ -1,5 +1,6 @@
 import stages from './stages.js';
 import Stage from './stage.js';
+import { drawHUD } from './hud.js';
 
 export default class Game {
   constructor({ input, view, stages }) {
@@ -46,6 +47,20 @@ export default class Game {
     if (!this.paused) {
       this.stage.update(this.input, frameDelta);
       this.view.update(this.stage);
+
+      // Малювання HUD на канвасі
+      const ctx = this.view.context;
+      const sprite = this.view.sprite;
+      const stage = this.stage;
+
+      const totalSeconds = Math.floor(stage.time / 1000);
+      const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+      const seconds = String(totalSeconds % 60).padStart(2, '0');
+      const formattedTime = `${minutes}:${seconds}`;
+
+      const remainingEnemies = stage.totalEnemyLimit - stage.spawnedEnemiesCount + stage.enemyTankCount;
+
+      drawHUD(ctx, sprite.image, sprite.frames, stage.score, formattedTime, remainingEnemies);
     }
 
     requestAnimationFrame(this.loop);
@@ -65,7 +80,6 @@ export default class Game {
   }
 }
 
-// Функція для показу зірок і очок
 function showVictoryModal(score, remainingTimeMs) {
   const starsEl = document.getElementById("victoryStars");
   const scoreEl = document.getElementById("victoryScore");
@@ -81,5 +95,3 @@ function showVictoryModal(score, remainingTimeMs) {
   if (scoreEl) scoreEl.textContent = `Scores: ${score}`;
   if (modalEl) modalEl.classList.remove("hidden");
 }
-
-

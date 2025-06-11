@@ -79,5 +79,7 @@
 |   ├── leaderboard.html
 |   ├── load_to_game_1.html
 |   ├── load_to_game_2.html
+|   ├── load_to_game_3.html
 |   ├── register.html             # форма реєстрації
+|   ├── tankim.html 
 |   └── tanki.html

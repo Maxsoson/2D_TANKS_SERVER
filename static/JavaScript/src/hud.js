@@ -1,5 +1,5 @@
-export function drawHUD(ctx, spriteImage, frames) {
-  const hudX = 512 + 8; // зона справа, з відступом
+export function drawHUD(ctx, spriteImage, frames, score, time, enemies) {
+  const hudX = 512 + 8; // зона справа
   const hudY = 0;
 
   // HUD текст
@@ -21,4 +21,11 @@ export function drawHUD(ctx, spriteImage, frames) {
   if (flag) {
     ctx.drawImage(spriteImage, flag.x, flag.y, flag.w, flag.h, hudX + 16, 128, flag.w, flag.h);
   }
+
+  // Динамічні значення
+  ctx.fillStyle = 'white';
+  ctx.font = '16px monospace';
+  ctx.fillText(`Score: ${score}`, hudX, 180);
+  ctx.fillText(`Time: ${time}`, hudX, 200);
+  ctx.fillText(`Enemies: ${enemies}`, hudX, 220);
 }
