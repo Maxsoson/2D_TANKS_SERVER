@@ -67,6 +67,10 @@ async def load_to_game_1(request: Request):
 async def load_to_game_2(request: Request):
     return templates.TemplateResponse("load_to_game_2.html", {"request": request})
 
+@app.get("/load_to_game_3.html", response_class=HTMLResponse)
+async def load_to_game_3(request: Request):
+    return templates.TemplateResponse("load_to_game_3.html", {"request": request})
+
 @app.get("/tanki.html", response_class=HTMLResponse)
 async def tanki(request: Request):
     return templates.TemplateResponse("tanki.html", {"request": request})
