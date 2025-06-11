@@ -1,11 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("index-modal");
-  const forgotLink = document.querySelector(".index-remember-forgot a"); // не забудь змінити в HTML
+  const forgotLink = document.querySelector(".index-remember-forgot a"); // не забудь перевірити, чи існує цей елемент
   const closeBtn = document.querySelector(".index-modal .index-close");
-  const recoverBtn = document.querySelector("#index-modal .index-btn");
-  const messageBox = document.getElementById("index-recover-message");
+  const sendBtn = document.getElementById("sendBtn");
+  const messageBox = document.getElementById("sendMessage");
+  const loginInput = document.getElementById("recovery-login");
+  const emailInput = document.getElementById("recovery-email");
 
-  if (forgotLink && modal && closeBtn && recoverBtn) {
+  // Валідація для кнопки
+  function validateInputs() {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (loginInput.value.trim() !== "" && emailRegex.test(emailInput.value.trim())) {
+      sendBtn.disabled = false;
+    } else {
+      sendBtn.disabled = true;
+    }
+  }
+
+  loginInput.addEventListener("input", validateInputs);
+  emailInput.addEventListener("input", validateInputs);
+
+  if (forgotLink && modal && closeBtn && sendBtn) {
     forgotLink.addEventListener("click", function (e) {
       e.preventDefault();
       modal.style.display = "block";
@@ -23,19 +38,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    recoverBtn.addEventListener("click", async function () {
-      const name = document.getElementById("index-recover-username").value.trim();
-      const email = document.getElementById("index-recover-email").value.trim();
-      messageBox.textContent = "";
+    sendBtn.addEventListener("click", async function () {
+      const login = loginInput.value.trim();
+      const email = emailInput.value.trim();
 
-      if (!name || !email) {
+      // Очистка старого повідомлення
+      messageBox.style.display = "none";
+
+      if (!login || !email) {
         messageBox.textContent = "Будь ласка, заповніть обидва поля.";
         messageBox.style.color = "red";
+        messageBox.style.display = "block";
         return;
       }
 
       const formData = new FormData();
-      formData.append("name", name);
+      formData.append("name", login);
       formData.append("email", email);
 
       try {
@@ -45,8 +63,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         const result = await response.json();
+
         messageBox.textContent = result.message;
-        messageBox.style.color = response.ok ? "green" : "red";
+        messageBox.style.color = response.ok ? "#00ff99" : "red";
+        messageBox.style.display = "block";
 
         if (response.ok) {
           setTimeout(() => {
@@ -57,13 +77,15 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (error) {
         messageBox.textContent = "Помилка запиту. Спробуйте ще раз.";
         messageBox.style.color = "red";
+        messageBox.style.display = "block";
       }
     });
 
     function clearInputs() {
-      document.getElementById("index-recover-username").value = "";
-      document.getElementById("index-recover-email").value = "";
-      messageBox.textContent = "";
+      loginInput.value = "";
+      emailInput.value = "";
+      sendBtn.disabled = true;
+      messageBox.style.display = "none";
     }
   }
 });

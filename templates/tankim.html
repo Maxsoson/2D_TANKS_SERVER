@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <title>Pixel Tanks: Multiplayer</title>
+  <link rel="stylesheet" href="/static/CSS/game.css" />
+  <link rel="icon" href="/static/Images/logo.png" />
+</head>
+<body>
+
+  <canvas id="gameCanvas" width="512" height="512"></canvas>
+
+  <!-- HUD, музика або інші елементи залишаються ті самі -->
+  <div class="hud-panel">
+    <div class="hud-item"><span>⏱ Timer:</span><span id="timer">00:00</span></div>
+    <div class="hud-item"><span>👾 Enemies:</span><span id="enemies">--</span></div>
+    <div class="hud-item"><span>❤️ Player 1:</span><span id="p1-lifes">3</span></div>
+    <div class="hud-item"><span>💙 Player 2:</span><span id="p2-lifes">3</span></div>
+  </div>
+
+  <!-- Підключення JavaScript -->
+  <script type="module" src="/static/JavaScript/tankim.js"></script>
+
+</body>
+</html>

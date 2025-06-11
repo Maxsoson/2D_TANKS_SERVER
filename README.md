@@ -49,7 +49,7 @@ uvicorn main:app --reload
 2D_TANKS_SERVER/
 ├── main.py                  # Запуск FastAPI сервера
 ├── database/
-│   └── users.db             # SQLite база даних користувачів
+│   └── users.db             # SQLite, PostgreSQL база даних користувачів 
 ├── static/                  # Статичні файли: CSS, JS, Images, Audio
 │   ├── CSS/
 │   ├── JavaScript/

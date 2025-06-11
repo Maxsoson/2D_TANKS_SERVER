@@ -3,18 +3,24 @@ import { getDirectionForKeys, getAxisForDirection, getValueForDirection } from '
 import Tank from '/static/JavaScript/src/tank.js';
 
 export default class PlayerTank extends Tank {
-    constructor(args) {
+    constructor(args, stage) {
         super(args);
 
+        this.stage = stage;
         this.type = 'playerTank';
         this.x = PLAYER1_TANK_POSITION[0];
         this.y = PLAYER1_TANK_POSITION[1];
         this.direction = Direction.UP;
         this.speed = TANK_SPEED;
         this.sprites = PLAYER1_TANK_SPRITES;
+
+        this.lastShotTime = 0;
+        this.shotCooldown = 1500; // 1.5 секунди
+        this.cooldown = 0;
     }
 
     update({ input, frameDelta, world }) {
+        // Рух
         if (input.has(Keys.UP, Keys.RIGHT, Keys.DOWN, Keys.LEFT)) {
             const direction = getDirectionForKeys(input.keys);
             const axis = getAxisForDirection(direction);
@@ -24,16 +30,25 @@ export default class PlayerTank extends Tank {
             this.move(axis, value);
             this.animate(frameDelta);
 
-            const isOutOfBounds = world.isOutOfBounds(this);
-            const hasCollision = world.hasCollision(this);
-
-            if (isOutOfBounds || hasCollision) {
+            if (world.isOutOfBounds(this) || world.hasCollision(this)) {
                 this.move(axis, -value);
             }
         }
 
+        // Стрільба з cooldown
         if (input.keys.has(Keys.SPACE)) {
-            this.fire();
+            const now = Date.now();
+            if (now - this.lastShotTime >= this.shotCooldown) {
+                this.fire();
+                this.lastShotTime = now;
+                this.cooldown = this.shotCooldown;
+            }
+        }
+
+        // Зменшення cooldown
+        if (this.cooldown > 0) {
+            this.cooldown -= frameDelta;
+            if (this.cooldown < 0) this.cooldown = 0;
         }
     }
 }

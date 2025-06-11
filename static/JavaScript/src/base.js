@@ -2,22 +2,25 @@ import { BASE_POSITION, BASE_WIDTH, BASE_HEIGHT, BASE_SPRITES } from './constant
 import GameObject from './game-object.js';
 
 export default class Base extends GameObject {
-    constructor(args) {
-        super(args);
+  constructor(args) {
+    super(args);
 
-        this.x = BASE_POSITION[0];
-        this.y = BASE_POSITION[1];
-        this.width = BASE_WIDTH;
-        this.height = BASE_HEIGHT;
-        this.sprites = BASE_SPRITES;
-        this.destroyed = false;
-    }
+    this.x = BASE_POSITION[0];
+    this.y = BASE_POSITION[1];
+    this.width = BASE_WIDTH;
+    this.height = BASE_HEIGHT;
+    this.sprites = BASE_SPRITES;
+    this.destroyed = false;
+  }
 
-    get sprite() {
-        return this.sprites[Number(this.destroyed)];
-    }
+  get sprite() {
+    return this.sprites[Number(this.destroyed)];
+  }
 
-    hit() {
-        this.emit('destroyed', this);
-    }
+  hit() {
+    if (this.destroyed) return; // Якщо вже знищена, ігноруємо
+
+    this.destroyed = true;
+    this.emit('destroyed', this);
+  }
 }

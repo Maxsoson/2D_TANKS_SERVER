@@ -16,12 +16,23 @@ const game = new Game({
 
 game.init().then(() => {
   game.start();
-
-  // HUD після створення stage
   setTimeout(() => {
     setupHUD(game.stage);
-  }, 100); // можна 50–200 мс, щоб точно stage вже був
+  }, 100);
 });
 
+// ПоразкаAdd commentMore actions
+document.getElementById('restartBtn')?.addEventListener('click', () => {
+  location.reload();
+});
+document.getElementById('menuBtn')?.addEventListener('click', () => {
+  window.location.href = 'load_to_game_1.html';
+});
 
-console.log(game);
+// Перемога
+document.getElementById('nextLevelBtn')?.addEventListener('click', () => {
+  window.location.href = 'tanki.html'; 
+});
+document.getElementById('menuBtn2')?.addEventListener('click', () => {
+  window.location.href = 'load_to_game_1.html';
+});
