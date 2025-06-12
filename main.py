@@ -84,7 +84,7 @@ def get_db_connection():
 
 # Створення таблиці
 with get_db_connection() as db:
-
+    # users
     db.execute("""
         CREATE TABLE IF NOT EXISTS users (
             user_id TEXT PRIMARY KEY,
@@ -94,7 +94,7 @@ with get_db_connection() as db:
             recovery_code TEXT
         )
     """)
-    
+    # progress
     db.execute("""
         CREATE TABLE IF NOT EXISTS progress (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -105,7 +105,7 @@ with get_db_connection() as db:
             FOREIGN KEY (user_id) REFERENCES users(user_id)
         )
     """)
-
+    # progress_summary
     db.execute("""
         CREATE TABLE IF NOT EXISTS progress_summary (
             user_id TEXT PRIMARY KEY,
@@ -117,7 +117,6 @@ with get_db_connection() as db:
     """)
 
     db.commit()
-
 
 def save_progress(user_id: str, score: int, stars: int, level: int):
     with get_db_connection() as db:
@@ -219,6 +218,35 @@ async def login_user(name: str = Form(...), password: str = Form(...)):
         })
 
     return JSONResponse(content={"message": "Invalid login or password"}, status_code=401)
+
+
+@app.get("/profile/{user_id}")
+def get_profile(user_id: str):
+    with get_db_connection() as db:
+        cursor = db.cursor()
+
+        # Отримати name і email з users
+        cursor.execute("SELECT name, email FROM users WHERE user_id = ?", (user_id,))
+        user = cursor.fetchone()
+        if not user:
+            return JSONResponse(status_code=404, content={"message": "User not found"})
+
+        # Отримати загальний бал з progress_summary
+        cursor.execute("SELECT total_score FROM progress_summary WHERE user_id = ?", (user_id,))
+        summary = cursor.fetchone()
+        total_score = summary["total_score"] if summary else 0
+
+        # Знайти місце в рейтингу
+        cursor.execute("SELECT user_id FROM progress_summary ORDER BY total_score DESC")
+        all_users = cursor.fetchall()
+        place = next((i + 1 for i, row in enumerate(all_users) if row["user_id"] == user_id), None)
+
+        return {
+            "email": user["email"],
+            "name": user["name"],
+            "score": total_score,
+            "place": place or "-"
+        }
 
 
 @app.get("/leaderboard")
@@ -400,4 +428,4 @@ async def send_bug_report(
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info")
