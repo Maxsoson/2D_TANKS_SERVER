@@ -2,11 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
     generateCaptcha();
     setupInputValidation();
 
-    // Додаємо обробник форми
-    document.getElementById("registerForm").addEventListener("submit", async function(event) {
-        event.preventDefault(); // Запобігаємо стандартній відправці форми
+    document.getElementById("registerForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
 
-        // Перевірка CAPTCHA перед відправкою
         const userAnswer = document.getElementById('captcha-input').value;
         const correctAnswer = document.getElementById('captcha-answer').value;
 
@@ -16,29 +14,30 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        let email = document.getElementById("email").value;
-        let name = document.getElementById("name").value;
-        let password = document.getElementById("password").value;
+        const email = document.getElementById("email").value;
+        const name = document.getElementById("name").value;
+        const password = document.getElementById("password").value;
 
-        let response = await fetch("/register", {
+        const response = await fetch("/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: new URLSearchParams({ email: email, name: name, password: password })
+            body: new URLSearchParams({ email, name, password })
         });
 
-        let result = await response.json();
+        const result = await response.json();
         document.getElementById("message").textContent = result.message;
 
-        // Якщо реєстрація успішна, показати модальне вікно
         if (result.message === "Користувач успішно зареєстрований") {
+            // Зберігаємо user_id у localStorage
+            localStorage.setItem("user_id", result.user_id);
             showModal();
         }
     });
 });
 
-/* === Генерація CAPTCHA === */
+/* === CAPTCHA === */
 function generateCaptcha() {
     const num1 = Math.floor(Math.random() * 10);
     const num2 = Math.floor(Math.random() * 10);
@@ -46,7 +45,7 @@ function generateCaptcha() {
     document.getElementById('captcha-answer').value = num1 + num2;
 }
 
-/* === Показати модальне вікно і накласти затемнення на всю сторінку === */
+/* === MODAL === */
 function showModal() {
     const modal = document.getElementById("success-modal");
     const overlay = document.getElementById("modal-overlay");
@@ -55,12 +54,11 @@ function showModal() {
     modal.style.display = "flex";
 
     setTimeout(() => {
-        overlay.style.opacity = "1"; 
-        modal.style.opacity = "1"; 
+        overlay.style.opacity = "1";
+        modal.style.opacity = "1";
     }, 10);
 }
 
-/* === Закрити модальне вікно і прибрати затемнення === */
 function closeModal() {
     const modal = document.getElementById("success-modal");
     const overlay = document.getElementById("modal-overlay");
@@ -72,12 +70,12 @@ function closeModal() {
         overlay.style.display = "none";
         modal.style.display = "none";
         document.querySelector("form").reset();
-        generateCaptcha(); // Генеруємо нову CAPTCHA
-        checkInputs(); // оновлюємо валідацію
+        generateCaptcha();
+        checkInputs();
     }, 300);
 }
 
-/* === Блокування кнопки поки не заповнені всі поля === */
+/* === VALIDATION === */
 function setupInputValidation() {
     const emailInput = document.querySelector("input[type='email']");
     const inputs = document.querySelectorAll("#registerForm input");
@@ -111,5 +109,5 @@ function setupInputValidation() {
         input.addEventListener("input", checkInputs);
     });
 
-    checkInputs(); // перевіряємо одразу при завантаженні
+    checkInputs(); // Перевірка одразу при завантаженні
 }

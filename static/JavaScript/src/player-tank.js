@@ -15,7 +15,7 @@ export default class PlayerTank extends Tank {
         this.sprites = PLAYER1_TANK_SPRITES;
 
         this.lastShotTime = 0;
-        this.shotCooldown = 1500; // 1.5 секунди
+        this.shotCooldown = 1250; // 1.25 секунди
         this.cooldown = 0;
     }
 

@@ -24,7 +24,7 @@
         <!-- HUD  -->
         <div id="hud" class="hud">
             <p>LEVEL: <span id="level">1</span></p>
-            <p>Enemies: <span id="enemies">x</span></p>
+            <p>Enemies: <span id="enemies">0</span></p>
             <p>Scores: <span id="scores">xxx</span></p>
             <p>LIFES: <span id="lifes">xxx</span></p>
             <p>Cooldown: <span id="cooldown">Ready</span></p>
@@ -77,6 +77,11 @@
             </div>
         </div>
     </div>
+
+    <script>
+        window.userId = localStorage.getItem("user_id");
+    </script>
+
 </body>
 
 </html>

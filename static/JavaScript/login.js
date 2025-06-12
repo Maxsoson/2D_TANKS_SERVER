@@ -27,11 +27,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // === Слухачі для валідації ===
     usernameInput.addEventListener("input", checkInputs);
     passwordInput.addEventListener("input", checkInputs);
 
-    checkInputs(); // Перевірка одразу при завантаженні
+    checkInputs();
 
     // === Обробка форми ===
     form.addEventListener("submit", async function (e) {
@@ -53,11 +52,16 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
+                // ✅ Зберігаємо user_id
+                localStorage.setItem("user_id", result.user_id);
+
+                // Зберігаємо ім'я та email
                 localStorage.setItem("user", JSON.stringify({
                     name: result.name,
                     email: result.email
                 }));
 
+                // Remember me
                 if (rememberCheckbox.checked) {
                     localStorage.setItem("rememberedUsername", name);
                 } else {

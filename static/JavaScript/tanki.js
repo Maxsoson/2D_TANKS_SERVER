@@ -21,7 +21,7 @@ game.init().then(() => {
   }, 100);
 });
 
-// ПоразкаAdd commentMore actions
+// Поразка
 document.getElementById('restartBtn')?.addEventListener('click', () => {
   location.reload();
 });

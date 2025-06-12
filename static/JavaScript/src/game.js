@@ -48,7 +48,6 @@ export default class Game {
       this.stage.update(this.input, frameDelta);
       this.view.update(this.stage);
 
-      // Малювання HUD на канвасі
       const ctx = this.view.context;
       const sprite = this.view.sprite;
       const stage = this.stage;
@@ -75,7 +74,40 @@ export default class Game {
   }
 
   onVictory() {
-    showVictoryModal(this.stage.score, this.stage.time);
+    const stage = this.stage;
+    const score = stage.score;
+    const remainingTimeMs = stage.time;
+
+    // Обчислення зірок
+    const timeSpent = 60000 - remainingTimeMs;
+    let stars = 1;
+    if (timeSpent <= 40000) stars = 2;
+    if (timeSpent <= 30000) stars = 3;
+
+    // Відправка результатів на сервер
+      const userId = window.userId;
+
+      // Відправка результатів на сервер
+      console.log("🎯 Sending progress...", {
+        user_id: window.userId,
+        score: score,
+        stars: stars,
+        level: this.stageIndex + 1
+      });
+      fetch("/game/victory", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: userId,
+          score: score,
+          stars: stars,
+          level: this.stageIndex + 1
+        })
+      });
+
+
+
+    showVictoryModal(score, remainingTimeMs);
     this.paused = true;
   }
 }
