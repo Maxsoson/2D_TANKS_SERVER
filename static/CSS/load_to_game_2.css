@@ -189,9 +189,10 @@ body, html {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    align-items: center;
-    max-width: 280px;
+    align-items: center; 
     width: 100%;
+    max-width: 280px;
+
 }
 
 .modal-content h2 {

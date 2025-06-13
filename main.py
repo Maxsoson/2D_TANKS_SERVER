@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse, FileResponse
 from pydantic import BaseModel
 import smtplib
 from email.mime.text import MIMEText
@@ -12,6 +12,7 @@ import logging
 from http import HTTPStatus
 from passlib.context import CryptContext
 import random
+import hashlib
 
 app = FastAPI()
 # Підключення статичних файлів
@@ -52,6 +53,10 @@ async def load_to_game_2(request: Request):
 async def load_to_game_3(request: Request):
     return templates.TemplateResponse("load_to_game_3.html", {"request": request})
 
+@app.get("/reset_password.html", response_class=HTMLResponse)
+async def reset_password(request: Request):
+    return templates.TemplateResponse("reset_password.html", {"request": request})
+
 @app.get("/tanki.html", response_class=HTMLResponse)
 async def tanki(request: Request):
     return templates.TemplateResponse("tanki.html", {"request": request})
@@ -81,6 +86,9 @@ def get_db_connection():
     conn = sqlite3.connect("database/users.db")
     conn.row_factory = sqlite3.Row
     return conn
+
+def hash_password(password: str) -> str:
+    return hashlib.sha256(password.encode()).hexdigest()
 
 # Створення таблиці
 with get_db_connection() as db:
@@ -331,17 +339,49 @@ async def recover_password(name: str = Form(...), email: str = Form(...)):
     return JSONResponse(content={"message": "Користувача не знайдено."}, status_code=404)
 
 @app.post("/verify-code")
-async def verify_code(email: str = Form(...), code: str = Form(...)):
+async def verify_code(request: Request, name: str = Form(...), code: str = Form(...)):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT recovery_code FROM users WHERE email = ?", (email,))
-    row = cursor.fetchone()
-    conn.close()
 
-    if row and row["recovery_code"] == code:
-        return JSONResponse(content={"message": "Код підтверджено. Можна змінити пароль."})
-    else:
-        return JSONResponse(content={"message": "Неправильний код"}, status_code=401)
+    try:
+        cursor.execute("SELECT recovery_code FROM users WHERE name = ?", (name,))
+        row = cursor.fetchone()
+
+        if row and row["recovery_code"] == code:
+            return JSONResponse(content={"message": "Код підтверджено."}, status_code=200)
+        else:
+            return JSONResponse(content={"message": "Невірний код підтвердження."}, status_code=400)
+    finally:
+        conn.close()
+    
+@app.post("/reset-password")
+async def reset_password(
+    user_id: str = Form(...),
+    recovery_code: str = Form(...),
+    new_password: str = Form(...)
+):
+    conn = sqlite3.connect("database/users.db")
+    cursor = conn.cursor()
+
+    try:
+        hashed_password = hash_password(new_password)
+        cursor.execute("""
+            UPDATE users 
+            SET password = ?, recovery_code = NULL 
+            WHERE user_id = ? AND recovery_code = ?
+        """, (hashed_password, user_id, recovery_code))
+        conn.commit()
+
+        if cursor.rowcount == 0:
+            return JSONResponse(status_code=404, content={"message": "Invalid code or user not found."})
+
+        return JSONResponse(status_code=200, content={"message": "Password updated successfully."})
+
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"message": f"Internal error: {e}"})
+
+    finally:
+        conn.close()
 
 @app.post("/change-password")
 async def change_password(email: str = Form(...), new_password: str = Form(...)):

@@ -81,5 +81,6 @@
 |   ├── load_to_game_2.html
 |   ├── load_to_game_3.html
 |   ├── register.html             # форма реєстрації
+|   ├── resetpassword.html
 |   ├── tankim.html 
 |   └── tanki.html

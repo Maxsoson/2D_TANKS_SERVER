@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 // Перемикання між інформацією і формою зміни пароля
 function togglePasswordForm(show) {
-    const info = document.getElementById("player-info-block");
+    const info = document.getElementById("profile-info-block");
     const form = document.getElementById("password-form-block");
 
     if (show) {
