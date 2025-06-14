@@ -16,13 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const sendMessage = document.getElementById("sendMessage");
   const title = document.getElementById("modal-title");
 
-  // Перевірка email
+  // ✅ Email валідація
   function validateEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
-  // Валідація логіна та email
+  // ✅ Дозвіл кнопки Send
   function updateSendButtonState() {
     sendButton.disabled = !(loginInput.value.trim() && validateEmail(emailInput.value.trim()));
   }
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loginInput.addEventListener("input", updateSendButtonState);
   emailInput.addEventListener("input", updateSendButtonState);
 
-  // Відкрити модальне вікно
+  // ✅ Відкрити модальне вікно
   if (forgotLink) {
     forgotLink.addEventListener("click", (e) => {
       e.preventDefault();
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Закрити модальне вікно
+  // ✅ Закрити модальне вікно
   if (closeBtn) {
     closeBtn.addEventListener("click", () => {
       modal.style.display = "none";
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Етап 1: Надіслати логін + email
+  // ✅ Етап 1: Send
   sendButton.addEventListener("click", async () => {
     const login = loginInput.value.trim();
     const email = emailInput.value.trim();
@@ -83,7 +83,12 @@ document.addEventListener("DOMContentLoaded", () => {
       sendMessage.style.display = "block";
 
       if (response.ok) {
-        // Переходити на етап 2
+        // ✅ Зберігаємо ВСЕ
+        localStorage.setItem("user_id", result.user_id);
+        localStorage.setItem("recovery_code", result.recovery_code);
+        localStorage.setItem("email", email); // важливо!
+
+        // Показуємо Verify крок
         stepLogin.style.display = "none";
         stepVerify.style.display = "block";
         title.textContent = "Enter Verification Key";
@@ -95,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Етап 2: Перевірити ключ
+  // ✅ Етап 2: Verify
   verifyButton.addEventListener("click", async () => {
     const key = verifyKeyInput.value.trim();
     const login = loginInput.value.trim();
@@ -124,9 +129,10 @@ document.addEventListener("DOMContentLoaded", () => {
       sendMessage.style.display = "block";
 
       if (response.ok) {
+        // ✅ Переходимо на reset_password.html БЕЗ параметрів
         setTimeout(() => {
           window.location.href = "reset_password.html";
-        }, 3000);
+        }, 2000);
       }
     } catch (error) {
       sendMessage.textContent = "🚫 Server error. Try again.";
@@ -135,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Початковий стан модального вікна
+  // ✅ Скидання стану
   function resetModal() {
     stepLogin.style.display = "block";
     stepVerify.style.display = "none";

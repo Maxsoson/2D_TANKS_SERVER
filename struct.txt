@@ -19,6 +19,7 @@
 │   │   ├── game.css
 │   │   ├── load_to_game_1.css
 │   │   ├── load_to_game_2.css
+│   │   ├── reset_password.css
 │   │   └── style.css
 |   |
 │   ├── Images/
@@ -71,6 +72,7 @@
 │   |   ├── profile.js
 │   │   ├── recover-password.js
 │   │   ├── register.js
+│   │   ├── reset_password.js
 │   |   └── tanki.js
 |   |
 ├── templates/
@@ -81,6 +83,6 @@
 |   ├── load_to_game_2.html
 |   ├── load_to_game_3.html
 |   ├── register.html             # форма реєстрації
-|   ├── resetpassword.html
+|   ├── reset_password.html
 |   ├── tankim.html 
 |   └── tanki.html

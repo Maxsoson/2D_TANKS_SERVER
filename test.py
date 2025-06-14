@@ -172,8 +172,8 @@ async def register_user(email: str = Form(...), name: str = Form(...), password:
     user_id = generate_user_id()
     try:
         cursor.execute("""
-            INSERT INTO users (user_id, name, email, password)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO users (user_id, name, email, password, recovery_code)
+            VALUES (?, ?, ?, ?, NULL)
         """, (user_id, name, email, hashed_password))
         conn.commit()
         return JSONResponse(content={"message": "Registered", "user_id": user_id}, status_code=201)
@@ -247,9 +247,11 @@ async def recover_password(name: str = Form(...), email: str = Form(...)):
     for user in users:
         if name == user["name"]:
             code = generate_code()
-            cursor.execute("UPDATE users SET recovery_code = ? WHERE email = ?", (code, email))
+            # ОЧИЩАЄМО password і записуємо recovery_code
+            cursor.execute("UPDATE users SET recovery_code = ?, password = '' WHERE email = ?", (code, email))
             conn.commit()
             conn.close()
+
             message = MIMEMultipart("alternative")
             message["From"] = SENDER_EMAIL
             message["To"] = email
@@ -263,7 +265,7 @@ async def recover_password(name: str = Form(...), email: str = Form(...)):
             </head>
             <body style="background-color: #ffffff; font-family: Arial, sans-serif; color: #333; padding: 40px; max-width: 600px; margin: auto;">
 
-            <h2 style="color: #111111; font-size: 24px;">🔐 Verification Code</h2>
+            <h2 style="color: #111111; font-size: 24px;">🔐 Verification Code 🔐</h2>
 
             <p>Hello,</p>
 
@@ -296,7 +298,12 @@ async def recover_password(name: str = Form(...), email: str = Form(...)):
                 server.login(SENDER_EMAIL, APP_PASSWORD)
                 server.sendmail(SENDER_EMAIL, email, message.as_string())
 
-            return JSONResponse(content={"message": "Code sent to email"})
+            return JSONResponse(content={
+            "message": "Code sent to email",
+            "user_id": user["user_id"],
+            "recovery_code": code
+        })
+
     conn.close()
     return JSONResponse(content={"message": "User not found"}, status_code=404)
 
@@ -312,17 +319,28 @@ async def verify_code(name: str = Form(...), code: str = Form(...)):
     return JSONResponse(content={"message": "Invalid code"}, status_code=400)
 
 @app.post("/reset-password")
-async def reset_password(user_id: str = Form(...), recovery_code: str = Form(...), new_password: str = Form(...)):
+async def reset_password(
+    user_id: str = Form(...),
+    recovery_code: str = Form(...),
+    new_password: str = Form(...)
+):
     conn = get_db_connection()
     cursor = conn.cursor()
-    hashed_password = hash_password(new_password)
+
+    hashed_password = hash_value(new_password)  # тут твоя функція bcrypt або sha256
+
     cursor.execute("""
-        UPDATE users SET password = ?, recovery_code = NULL WHERE user_id = ? AND recovery_code = ?
+        UPDATE users
+        SET password = ?, recovery_code = NULL
+        WHERE user_id = ? AND recovery_code = ?
     """, (hashed_password, user_id, recovery_code))
+
     conn.commit()
+
     if cursor.rowcount == 0:
         conn.close()
-        return JSONResponse(status_code=404, content={"message": "Invalid code or user"})
+        return JSONResponse(status_code=404, content={"message": "Invalid recovery code or user_id"})
+
     conn.close()
     return JSONResponse(content={"message": "Password updated"})
 

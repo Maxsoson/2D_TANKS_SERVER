@@ -181,7 +181,6 @@ def game_victory(data: VictoryData):
     save_progress(data.user_id, data.score, data.stars, data.level)
     return {"status": "saved"}
 
-
 @app.post("/register")
 async def register_user(request: Request, email: str = Form(...), name: str = Form(...), password: str = Form(...)):
     conn = get_db_connection()
@@ -207,7 +206,6 @@ async def register_user(request: Request, email: str = Form(...), name: str = Fo
     finally:
         conn.close()
 
-
 @app.post("/login")
 async def login_user(name: str = Form(...), password: str = Form(...)):
     conn = get_db_connection()
@@ -226,7 +224,6 @@ async def login_user(name: str = Form(...), password: str = Form(...)):
         })
 
     return JSONResponse(content={"message": "Invalid login or password"}, status_code=401)
-
 
 @app.get("/profile/{user_id}")
 def get_profile(user_id: str):
@@ -255,7 +252,6 @@ def get_profile(user_id: str):
             "score": total_score,
             "place": place or "-"
         }
-
 
 @app.get("/leaderboard")
 def get_leaderboard():
