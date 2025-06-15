@@ -123,6 +123,14 @@ async def reset_password(request: Request):
 async def tanki(request: Request):
     return templates.TemplateResponse("tanki.html", {"request": request})
 
+@app.get("/tanki2.html", response_class=HTMLResponse)
+async def tanki2(request: Request):
+    return templates.TemplateResponse("tanki2.html", {"request": request})
+
+@app.get("/tanki3.html", response_class=HTMLResponse)
+async def tanki3(request: Request):
+    return templates.TemplateResponse("tanki3.html", {"request": request})
+
 # === GAME LOGIC ===
 class VictoryData(BaseModel):
     user_id: str

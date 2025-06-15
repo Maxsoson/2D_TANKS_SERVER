@@ -47,7 +47,9 @@
 │   |   |   ├── event-emitter.js
 │   |   |   ├── explosion.js
 │   |   |   ├── game-object.js
-│   |   |   ├── game.js
+│   |   |   ├── game.js   
+│   |   |   ├── game2.js
+│   |   |   ├── game3.js
 │   |   |   ├── hud.js
 │   |   |   ├── input.js
 │   |   |   ├── player-tank.js
@@ -55,9 +57,13 @@
 │   |   |   ├── sprite.js
 │   |   |   ├── stage.js
 │   |   |   ├── stages.js
+│   |   |   ├── stages2.js
+│   |   |   ├── stages3.js
 │   |   |   ├── steel-wall.js
 │   |   |   ├── tank-explosion.js
-│   |   |   ├── tank.js
+│   |   |   ├── tanki.js
+│   |   |   ├── tanki2.js
+│   |   |   ├── tanki3.js
 │   |   |   ├── utils.js
 │   |   |   ├── view.js
 │   |   |   └── wall.js
@@ -85,5 +91,7 @@
 |   ├── load_to_game_3.html
 |   ├── register.html             # форма реєстрації
 |   ├── reset_password.html
-|   ├── tankim.html 
-|   └── tanki.html
+|   ├── tanki.html
+|   ├── tanki2.html 
+|   ├── tanki3.html  
+|   └── tankim.html
