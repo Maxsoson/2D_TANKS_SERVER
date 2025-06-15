@@ -253,7 +253,6 @@ def get_profile(user_id: str):
             "place": place or "-"
         }
 
-
 # === PASSWORD RECOVERY ===
 @app.post("/recover-password")
 async def recover_password(name: str = Form(...), email: str = Form(...)):

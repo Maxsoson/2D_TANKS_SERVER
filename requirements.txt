@@ -2,8 +2,7 @@ fastapi
 uvicorn
 jinja2
 aiofiles
-email-validator
-sqlalchemy
-asyncpg
+pydantic
+passlib[bcrypt]
+bcrypt
 python-multipart
-psycopg2-binary
