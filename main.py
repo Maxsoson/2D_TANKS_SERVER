@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, HTTPException, Request, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
@@ -11,6 +11,7 @@ from datetime import datetime
 from passlib.context import CryptContext
 import random
 import hashlib
+import bcrypt
 
 app = FastAPI()
 
@@ -49,6 +50,7 @@ def get_db_connection():
 
 # === Створення таблиць ===
 with get_db_connection() as db:
+    # users
     db.execute("""
         CREATE TABLE IF NOT EXISTS users (
             user_id TEXT PRIMARY KEY,
@@ -58,9 +60,9 @@ with get_db_connection() as db:
             recovery_code TEXT
         )
     """)
+    # progress
     db.execute("""
         CREATE TABLE IF NOT EXISTS progress (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id TEXT NOT NULL,
             level INTEGER NOT NULL,
             score INTEGER NOT NULL,
@@ -68,6 +70,7 @@ with get_db_connection() as db:
             FOREIGN KEY (user_id) REFERENCES users(user_id)
         )
     """)
+    # progress_summary
     db.execute("""
         CREATE TABLE IF NOT EXISTS progress_summary (
             user_id TEXT PRIMARY KEY,
@@ -126,6 +129,12 @@ class VictoryData(BaseModel):
     score: int
     stars: int
     level: int
+    
+class ChangePasswordRequest(BaseModel):
+    user_id: str
+    old_password: str
+    new_password: str
+    confirm_password: str
 
 @app.post("/game/victory")
 def game_victory(data: VictoryData):
@@ -343,6 +352,38 @@ async def reset_password(
 
     conn.close()
     return JSONResponse(content={"message": "Password updated"})
+
+@app.post("/change-password")
+async def change_password(req: ChangePasswordRequest):
+    conn = sqlite3.connect("database/users.db")
+    cursor = conn.cursor()
+    # 1) Знайти по user_id
+    cursor.execute("SELECT password FROM users WHERE user_id = ?", (req.user_id,))
+    row = cursor.fetchone()
+
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="User not found")
+
+    stored_hash = row[0]
+    # 2) Перевірити старий пароль
+    if not bcrypt.checkpw(req.old_password.encode(), stored_hash.encode()):
+        conn.close()
+        raise HTTPException(status_code=400, detail="Old password is incorrect")
+    # Очищуємо старий хеш з пам'яті (для прикладу)
+    stored_hash = None
+    # 3) Перевірити збіг нового і підтвердження
+    if req.new_password != req.confirm_password:
+        conn.close()
+        raise HTTPException(status_code=400, detail="New passwords do not match")
+    # 4) Хешуємо новий пароль
+    new_hash = bcrypt.hashpw(req.new_password.encode(), bcrypt.gensalt()).decode()
+    # 5) Оновлюємо у БД
+    cursor.execute("UPDATE users SET password = ? WHERE user_id = ?", (new_hash, req.user_id))
+    conn.commit()
+    conn.close()
+
+    return {"message": "Password changed successfully!"}
 
 # === BUG REPORT ===
 @app.post("/send-bug-report")

@@ -32,14 +32,17 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     // 👁 Показ/приховування паролю
-    document.querySelectorAll('.toggle-password').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const input = btn.previousElementSibling;
-            const isHidden = input.type === 'password';
-            input.type = isHidden ? 'text' : 'password';
-            btn.textContent = isHidden ? '🙈' : '👁';
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll('.toggle-password').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const input = btn.closest('.password-field').querySelector('input');
+                const isHidden = input.type === 'password';
+                input.type = isHidden ? 'text' : 'password';
+                btn.textContent = isHidden ? '🙈' : '👁';
+            });
         });
     });
+
 
     // 🔄 Завантаження даних профілю
     const userId = localStorage.getItem("user_id");

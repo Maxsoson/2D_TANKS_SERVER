@@ -62,7 +62,8 @@
 │   |   |   ├── view.js
 │   |   |   └── wall.js
 |   |   |
-│   │   ├── bug_report.js
+│   │   ├── bug_report.js   
+│   │   ├── change_password.js
 │   │   ├── home.js   
 │   │   ├── hud.js
 │   │   ├── leaderboard.js  

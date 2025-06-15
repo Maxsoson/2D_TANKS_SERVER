@@ -2,7 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
     generateCaptcha();
     setupInputValidation();
 
-    document.getElementById("registerForm").addEventListener("submit", async function (event) {
+    const form = document.getElementById("registerForm");
+
+    form.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         const userAnswer = document.getElementById('captcha-input').value;
@@ -29,9 +31,20 @@ document.addEventListener("DOMContentLoaded", function () {
         const result = await response.json();
         document.getElementById("message").textContent = result.message;
 
-        if (result.message === "Користувач успішно зареєстрований") {
+        if (result.message === "Користувач успішно зареєстрований" || result.message === "Registered") {
             // Зберігаємо user_id у localStorage
             localStorage.setItem("user_id", result.user_id);
+
+            // ✅ Очищаємо форму
+            form.reset();
+
+            // ✅ Генеруємо нову CAPTCHA
+            generateCaptcha();
+
+            // ✅ Перевіряємо поля для правильного стану кнопки
+            checkInputs();
+
+            // ✅ Показуємо модальне вікно успіху
             showModal();
         }
     });
@@ -86,7 +99,7 @@ function setupInputValidation() {
         return emailPattern.test(email);
     }
 
-    function checkInputs() {
+    window.checkInputs = function checkInputs() {
         let allFilled = true;
         let validEmail = isValidEmail(emailInput.value);
 

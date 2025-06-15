@@ -10,6 +10,7 @@
     <script src="{{ url_for('static', path='JavaScript/home.js') }}" defer></script>
     <script src="{{ url_for('static', path='JavaScript/profile.js') }}" defer></script> 
     <script src="{{ url_for('static', path='JavaScript/load-profile.js') }}" defer></script>
+    <script src="{{ url_for('static', path='JavaScript/change_password.js') }}"></script>
     <script src="{{ url_for('static', path='JavaScript/music-player.js') }}" defer></script>
     
 </head>
@@ -23,7 +24,7 @@
 
     <!-- 🔹 Заголовок та кнопки -->
     <div class="overlay">
-        <h1>Test Place</h1>
+        <h1>Pixel Tanks Battlefront</h1>
         <div class="button-container">
             <a href="load_to_game_2.html" class="pixel-button">Play</a>
             <a href="load_to_game_3.html" class="pixel-button">Multiplayer</a>
@@ -51,21 +52,22 @@
                 <div class="modal-section hidden" id="password-form-block">
                     <form class="password-change-form">
                         <div class="password-field">
-                            <input type="password" placeholder="Old Password" required>
+                            <input type="password" id="old-password" placeholder="Old Password" required>
                             <button type="button" class="toggle-password">👁</button>
                         </div>
                         <div class="password-field">
-                            <input type="password" placeholder="New Password" required>
+                            <input type="password" id="new-password" placeholder="New Password" required>
                             <button type="button" class="toggle-password">👁</button>
                         </div>
                         <div class="password-field">
-                            <input type="password" placeholder="Confirm Password" required>
+                            <input type="password" id="confirm-password" placeholder="Confirm Password" required>
                             <button type="button" class="toggle-password">👁</button>
                         </div>
                         <button type="submit" class="change-password-button">Submit</button>
                     </form>
                     <button class="change-view-button" onclick="togglePasswordForm(false)">Back</button>
                 </div>
+
             </div>
 
             <div class="logout-wrapper">
