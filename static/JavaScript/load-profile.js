@@ -5,6 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("player-name").textContent = user.name;
       document.getElementById("player-email").textContent = user.email;
   } else {
-      window.location.href = "/index.html"; // якщо не авторизований
+      window.location.href = "index.html"; // якщо не авторизований
   }
 });

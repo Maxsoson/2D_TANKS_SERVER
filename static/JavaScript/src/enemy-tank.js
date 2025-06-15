@@ -22,6 +22,10 @@ export default class EnemyTank extends Tank {
         this.sprites = ENEMY_TANK_SPRITES[0];
 
         this.turnTimer = 0;
+
+        // Стрільба
+        this.fireCooldown = 0;
+        this.FIRE_RATE = 1500; // 1.5 секунди
     }
 
     setPosition(positionIndex) {
@@ -33,6 +37,7 @@ export default class EnemyTank extends Tank {
         if (this.isDestroyed) {
             this.explode();
             this.destroy();
+            return;
         }
 
         const direction = this.direction;
@@ -40,7 +45,14 @@ export default class EnemyTank extends Tank {
         const value = getValueForDirection(direction);
 
         this.move(axis, value);
-        this.fire();
+
+        // Затримка перед наступним пострілом
+        this.fireCooldown -= frameDelta;
+        if (this.fireCooldown <= 0) {
+            this.fire(); // викликається успадкований метод fire() з Tank
+            this.fireCooldown = this.FIRE_RATE;
+        }
+
         this.animate(frameDelta);
 
         const isOutOfBounds = world.isOutOfBounds(this);
@@ -57,19 +69,16 @@ export default class EnemyTank extends Tank {
 
     hit(bullet) {
         if (bullet.isFromEnemyTank) return;
-
         super.hit();
     }
 
     shouldTurn(frameDelta) {
         this.turnTimer += frameDelta;
-
         return this.turnTimer > ENEMY_TANK_TURN_TIMER_THRESHOLD;
     }
 
     turnRandomly() {
         const randomDirection = Math.floor(Math.random() * 4);
-
         this.turnTimer = 0;
         this.turn(randomDirection);
     }

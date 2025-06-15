@@ -12,25 +12,27 @@
 <body>
     <div class="game-container">
         <div class="canvas-wrapper">
-        <!-- 🕒 LED Timer -->
+        <!-- Timer -->
         <div class="led-timer">
             <span id="timer">01:00</span>
         </div>
 
-        <!-- 🎮 Полотно гри -->
+        <!--  Полотно гри -->
         <canvas id="game" width="416" height="416"></canvas>
         </div>
 
-        <!-- 📊 HUD справа -->
-        <div class="hud">
-        <p>LEVEL: <span id="level">1</span></p>
-        <p>Enemies: <span id="enemies">x</span></p>
-        <p>Scores: <span id="scores">xxx</span></p>
-        <p>LIFES: <span id="lifes">xxx</span></p>    
+        <!-- HUD  -->
+        <div id="hud" class="hud">
+            <p>LEVEL: <span id="level">1</span></p>
+            <p>Enemies: <span id="enemies">0</span></p>
+            <p>Scores: <span id="scores">xxx</span></p>
+            <p>LIFES: <span id="lifes">xxx</span></p>
+            <p>Cooldown: <span id="cooldown">Ready</span></p>
         </div>
-    </div>
 
-    <!-- ⏸️ Модальне вікно ПАУЗИ -->
+    </div> 
+
+    <!--  Модальне вікно ПАУЗИ -->
     <div class="pause-modal" id="pauseModal">
         <div class="pause-modal-content">
         <h1>PAUSED</h1>
@@ -51,6 +53,35 @@
         <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" style="vertical-align: middle;">
         <audio id="audio-player"></audio>
     </div>
+
+    <div id="defeatModal" class="modal defeat-modal hidden">Add commentMore actions
+        <div class="modal-content">
+        <h2>Game over! :c Try again!
+        </h2>
+        <p>0 / 3 ⭐</p>
+            <div class="button-group">
+                <button id="restartBtn">Replay</button>
+                <button id="menuBtn">Leave</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="victoryModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Victory!</h2>
+            <p id="victoryStars" class="stars">⭐⭐⭐</p>
+            <p id="victoryScore">Scores: 0</p>
+            <div class="button-group">
+                <button id="nextLevelBtn">Next level</button>
+                <button id="menuBtn2">Leave</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.userId = localStorage.getItem("user_id");
+    </script>
+
 </body>
 
 </html>

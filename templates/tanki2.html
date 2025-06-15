@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Pixel Tank Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='CSS/game.css') }}">
+    <script type="module" src="{{ url_for('static', path='JavaScript/tanki2.js') }}" defer></script>
+    <script type="module" src="{{ url_for('static', path='JavaScript/music-player.js') }}" defer></script>
+</head>
+<body>
+  <div class="game-container">
+    <div class="canvas-wrapper">
+      <!-- Timer -->
+      <div class="led-timer">
+        <span id="timer">01:00</span>
+      </div>
+
+      <!-- 🎮 Полотно гри -->
+      <canvas id="game" width="416" height="416"></canvas>
+    </div>
+
+    <!-- HUD -->
+    <div class="hud">
+        <p>LEVEL:<span id="level">2</span></p>
+        <p>Enemies:<span id="enemies">x</span></p>
+        <p>Scores:<span id="scores">xxx</span></p>
+        <p>LIFES:<span id="lifes">xxx</span></p>
+        <p>Shoot CD:<span id="cooldown">Ready</span></p>
+    </div>
+
+  </div>
+
+  <!-- Модальне вікно ПАУЗИ -->
+  <div class="pause-modal" id="pauseModal">
+    <div class="pause-modal-content">
+      <h1>PAUSED</h1>
+      <p>Press "P" to resume</p>
+    </div>
+  </div>
+
+  <!-- Інструкції по паузі під полем гри -->
+  <div class="pause-instructions">
+    Press "P" to Pause the game.
+  </div>
+</body>
+
+<div id="music-player" style="position: fixed; bottom: 20px; left: 20px; z-index: 999; background: rgba(0,0,0,0.6); padding: 10px 15px; border-radius: 12px;">
+  <span id="track-name" style="color: #fff; margin-right: 10px;">Now playing: Track 1</span>
+  <button id="play-btn" class="music-btn">▶︎</button>
+  <button id="next-btn" class="music-btn">⏭</button>
+  <button id="mute-btn" class="music-btn muted">🔈</button>
+  <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" style="vertical-align: middle;">
+  <audio id="audio-player"></audio>
+</div>
+
+<div id="defeatModal" class="modal defeat-modal hidden">
+  <div class="modal-content">
+    <h2>Game over! :c Try again!
+    </h2>
+    <p>0 / 3 ⭐</p>
+    <div class="button-group">
+      <button id="restartBtn">Replay</button>
+      <button id="menuBtn">Leave</button>
+    </div>
+  </div>
+</div>
+
+<div id="victoryModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Victory!</h2>
+    <p id="victoryStars" class="stars">⭐⭐⭐</p>
+    <p id="victoryScore">Scores: 0</p>
+    <div class="button-group">
+      <button id="nextLevelBtn">Next level</button>
+      <button id="menuBtn2">Leave</button>
+    </div>
+  </div>
+</div>
+
+</html>

@@ -18,14 +18,11 @@ export const Direction = {
     LEFT: 3
 };
 
-export const TerrainType = {
-    BASE: 0,
-    BRICK_WALL: 1,
-    STEEL_WALL: 2,
-    TREE: 3,
-    WATER: 4,
-    ICE: 5
+ export const TerrainType = {
+  BRICK_WALL: 1,
+  STEEL_WALL: 2,
 };
+
 
 export const BASE_POSITION = [6 * UNIT_SIZE, 12 * UNIT_SIZE];
 export const BASE_WIDTH = UNIT_SIZE;
@@ -110,12 +107,14 @@ export const TANK_ANIMATION_FRAME = 20;
 export const TANK_EXPLOSION_WIDTH = UNIT_SIZE * 2;
 export const TANK_EXPLOSION_HEIGHT = UNIT_SIZE * 2;
 export const TANK_EXPLOSION_SPEED = 7;
+
+
 export const TANK_EXPLOSION_SPRITES = [
-    [20 * UNIT_SIZE, 8 * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE],
-    [20 * UNIT_SIZE, 8 * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE],
-    [20 * UNIT_SIZE, 8 * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE],
-    [20 * UNIT_SIZE, 8 * UNIT_SIZE, UNIT_SIZE * 2, UNIT_SIZE * 2],
-    [20 * UNIT_SIZE, 8 * UNIT_SIZE, UNIT_SIZE * 2, UNIT_SIZE * 2]
+    [99990 * UNIT_SIZE, 990 * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE],
+    [9990 * UNIT_SIZE, 9990 * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE],
+    [9990 * UNIT_SIZE, 990 * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE],
+    [9990 * UNIT_SIZE, 9990 * UNIT_SIZE, UNIT_SIZE * 999, UNIT_SIZE * 999],
+    [99990 * UNIT_SIZE, 9990 * UNIT_SIZE, UNIT_SIZE * 999, UNIT_SIZE * 999]
 ];
 
 export const STEEL_WALL_SPRITES = [

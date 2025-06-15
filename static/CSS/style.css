@@ -702,15 +702,31 @@ main {
 .index-btn {
     width: 100%;
     padding: 12px;
-    background: #888;
-    color: white;
     font-size: 16px;
     font-weight: bold;
     border: none;
     border-radius: 10px;
-    cursor: not-allowed;
     text-align: center;
     transition: background 0.3s, transform 0.2s;
+}
+
+/* Стиль кнопки, коли вона неактивна (disabled) */
+.index-btn:disabled {
+    background: #888;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Стиль кнопки, коли вона активна */
+.index-btn:enabled {
+    background: #00ff99;
+    color: #000;
+    cursor: pointer;
+}
+
+.index-btn:enabled:hover {
+    background: #00cc7a;
+    transform: scale(1.05);
 }
 
 .index-btn.active {

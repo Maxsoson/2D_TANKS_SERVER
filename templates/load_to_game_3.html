@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>In Development</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    .modal-dev {
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content-dev {
+      background: #111;
+      padding: 30px;
+      border-radius: 12px;
+      color: #00ff99;
+      text-align: center;
+      box-shadow: 0 0 20px #00ff99;
+      font-family: 'Press Start 2P', cursive;
+    }
+
+    #devModalClose {
+      margin-top: 25px;
+      padding: 12px 24px;
+      background: #ff0033;
+      border: none;
+      color: white;
+      font-weight: bold;
+      font-family: 'Press Start 2P', cursive;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #devModalClose:hover {
+      background: #cc002a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Модальне вікно "In Development" -->
+  <div id="devModal" class="modal-dev">
+    <div class="modal-content-dev">
+      <h2>🚧 In Development</h2>
+      <p>This feature is currently under development.</p>
+      <button id="devModalClose">OK</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const modal = document.getElementById("devModal");
+      const closeBtn = document.getElementById("devModalClose");
+
+      modal.style.display = "flex";
+
+      closeBtn.addEventListener("click", function () {
+        window.location.href = "load_to_game_1.html";
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -134,9 +134,9 @@ h1 {
     color: white;
     font-family: 'Silkscreen', sans-serif;
     box-shadow: 0 0 2px #00FF00;
-    max-width: 720px;       
+    max-width: 600;       
     width: auto;
-    min-width: 300px;             
+    min-width: 600px;             
     position: relative;
     border: 2px solid #00FF00;
     gap: 30px;
@@ -158,10 +158,10 @@ h1 {
 /* Контейнер колонок */
 .modal-profile-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
     width: 100%;
-    gap: 24px; /* Було 40px */
+    gap: 50px; /* Було 40px */
 }
 
 

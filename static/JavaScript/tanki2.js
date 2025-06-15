@@ -1,8 +1,8 @@
 import Input from '/static/JavaScript/src/input.js';
 import View from '/static/JavaScript/src/view.js';
-import Game from '/static/JavaScript/src/game.js';
+import Game from '/static/JavaScript/src/game2.js';
 import Sprite from '/static/JavaScript/src/sprite.js';
-import stages from '/static/JavaScript/src/stages.js';
+import stages from '/static/JavaScript/src/stages2.js';
 import { setupHUD } from '/static/JavaScript/hud.js';
 
 const canvas = document.querySelector('canvas');
@@ -31,7 +31,7 @@ document.getElementById('menuBtn')?.addEventListener('click', () => {
 
 // Перемога
 document.getElementById('nextLevelBtn')?.addEventListener('click', () => {
-  window.location.href = 'tanki2.html'; 
+  window.location.href = 'tanki3.html'; 
 });
 document.getElementById('menuBtn2')?.addEventListener('click', () => {
   window.location.href = 'load_to_game_2.html';
