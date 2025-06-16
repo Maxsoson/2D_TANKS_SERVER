@@ -35,7 +35,7 @@ audio.play().then(() => {
   isPlaying = true;
   updateMuteIcon();
 }).catch((e) => {
-  console.warn("Автовідтворення заблоковано:", e);
+  console.warn("Autoplay is blocked:", e);
 });
 
 // ▶️ / ⏸ кнопка

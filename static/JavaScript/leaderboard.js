@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     try {
         const response = await fetch("/leaderboard");
-        if (!response.ok) throw new Error("Сервер повернув помилку");
+        if (!response.ok) throw new Error("The server returned an error");
 
         const data = await response.json();
         const players = data.map(entry => ({
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         renderLeaderboard(players);
     } catch (error) {
-        console.error("❌ Помилка завантаження рейтингу:", error);
+        console.error("❌ Error loading rating:", error);
         leaderboardTable.innerHTML = `
             <tr>
                 <td colspan="3" style="text-align: center; color: red;">Failed to load leaderboard data</td>

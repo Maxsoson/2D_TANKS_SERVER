@@ -59,11 +59,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 form.reset();
                 checkInputs();
             } else {
-                responseMsg.textContent = result.error || "Помилка при надсиланні";
+                responseMsg.textContent = result.error || "Error sending";
                 responseMsg.style.color = "red";
             }
         } catch (error) {
-            responseMsg.textContent = "Помилка з'єднання";
+            responseMsg.textContent = "Connection error";
             responseMsg.style.color = "red";
         }
     });

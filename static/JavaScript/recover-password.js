@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sendMessage.style.display = "none";
 
     if (!login || !email) {
-      sendMessage.textContent = "Будь ласка, заповніть обидва поля.";
+      sendMessage.textContent = "Please fill in both fields.";
       sendMessage.style.color = "red";
       sendMessage.style.display = "block";
       return;
