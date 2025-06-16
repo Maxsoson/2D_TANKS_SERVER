@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const result = await response.json();
         document.getElementById("message").textContent = result.message;
 
-        if (result.message === "Користувач успішно зареєстрований" || result.message === "Registered") {
+        if (result.message === "The user is successfully registered" || result.message === "Registered") {
             // Зберігаємо user_id у localStorage
             localStorage.setItem("user_id", result.user_id);
 

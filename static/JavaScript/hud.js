@@ -6,7 +6,7 @@ export function setupHUD(stage) {
     const cooldownSpan = document.getElementById("cooldown");
 
     if (!enemiesSpan || !livesSpan || !scoresSpan || !timerSpan || !cooldownSpan) {
-        console.warn("HUD: не знайдені елементи");
+        console.warn("HUD: no items found");
         return;
     }
 

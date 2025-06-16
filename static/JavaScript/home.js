@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const canvas = document.getElementById("tankCanvas");
 
     if (!canvas) {
-        console.error("⚠️ Canvas #tankCanvas не знайдено!");
+        console.error("⚠️ Canvas #tankCanvas not found!");
         return;
     }
 
@@ -83,8 +83,8 @@ document.addEventListener("DOMContentLoaded", function () {
         tankImages[1].src = '/static/Images/skin2.png';
 
         tankImages.forEach(img => {
-            img.onload = () => console.log("🟢 Завантажено зображення танка:", img.src);
-            img.onerror = () => console.error("🔴 Помилка завантаження зображення:", img.src);
+            img.onload = () => console.log("🟢 Tank image uploaded:", img.src);
+            img.onerror = () => console.error("🔴 Image upload error:", img.src);
         });
 
         const directions = ['up', 'down', 'right', 'left'];
@@ -126,7 +126,6 @@ document.addEventListener("DOMContentLoaded", function () {
     animateTanks();
 
     window.addEventListener("resize", () => {
-        console.log("🔄 Оновлення розміру canvas");
         animateTanks();
     });
 
